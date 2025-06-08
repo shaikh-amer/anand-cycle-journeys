@@ -1,11 +1,11 @@
 
 const BrandsShowcase = () => {
-  const brands = [
-    { name: "HERO", logo: "🚲" },
-    { name: "FIREFOX", logo: "🔥" },
-    { name: "HERCULES", logo: "💪" },
-    { name: "ATLAS CYCLES", logo: "🌍" },
-    { name: "AVON CYCLES", logo: "⭐" }
+  const brandItems = [
+    { icon: "🚲" },
+    { icon: "🔥" },
+    { icon: "💪" },
+    { icon: "🌍" },
+    { icon: "⭐" }
   ];
 
   return (
@@ -22,24 +22,21 @@ const BrandsShowcase = () => {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {brands.map((brand, index) => (
+          {brandItems.map((item, index) => (
             <div 
-              key={brand.name}
+              key={index}
               className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 hover-scale group"
             >
               <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                {brand.logo}
+                {item.icon}
               </div>
-              <h3 className="font-bold text-primary text-center text-sm lg:text-base">
-                {brand.name}
-              </h3>
             </div>
           ))}
         </div>
 
         <div className="text-center mt-12">
           <p className="text-sm text-muted-foreground">
-            And many more quality brands available in our store
+            Quality brands available in our physical store
           </p>
         </div>
       </div>
