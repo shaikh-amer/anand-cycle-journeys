@@ -18,8 +18,7 @@ const Products = () => {
       id: 1,
       name: "Hero Ranger DTB",
       category: "kids",
-      price: "₹4,500",
-      image: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?w=500",
+      image: "https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=500&q=80",
       description: "Perfect starter bike for kids",
       features: ["16-inch wheels", "Training wheels included", "Bright colors"]
     },
@@ -27,8 +26,7 @@ const Products = () => {
       id: 2,
       name: "Hero Sprint Pro",
       category: "mtb",
-      price: "₹28,000",
-      image: "https://images.unsplash.com/photo-1544191696-15693072fb64?w=500",
+      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
       description: "Professional mountain bike",
       features: ["21-speed gear", "Front suspension", "Alloy frame"]
     },
@@ -36,8 +34,7 @@ const Products = () => {
       id: 3,
       name: "Hero Kyoto",
       category: "hybrid",
-      price: "₹18,500",
-      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500",
+      image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500&q=80",
       description: "Comfort hybrid for city rides",
       features: ["7-speed", "Comfortable seat", "City & trail ready"]
     },
@@ -45,8 +42,7 @@ const Products = () => {
       id: 4,
       name: "Safety Helmet",
       category: "accessories",
-      price: "₹1,200",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500",
+      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
       description: "ISI certified safety helmet",
       features: ["Multiple sizes", "Ventilation", "Adjustable straps"]
     },
@@ -54,8 +50,7 @@ const Products = () => {
       id: 5,
       name: "Hero Miss India",
       category: "kids",
-      price: "₹5,200",
-      image: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?w=500",
+      image: "https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=500&q=80",
       description: "Stylish bike for young girls",
       features: ["20-inch wheels", "Basket included", "Pink design"]
     },
@@ -63,8 +58,7 @@ const Products = () => {
       id: 6,
       name: "Hero Octane",
       category: "mtb",
-      price: "₹35,000",
-      image: "https://images.unsplash.com/photo-1544191696-15693072fb64?w=500",
+      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
       description: "Premium mountain bike",
       features: ["24-speed", "Dual suspension", "Lightweight frame"]
     }
@@ -154,7 +148,6 @@ const Products = () => {
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg">{product.name}</CardTitle>
                     <CardDescription>{product.description}</CardDescription>
-                    <div className="text-xl font-bold text-primary">{product.price}</div>
                   </CardHeader>
                   
                   <CardContent className="pt-0">

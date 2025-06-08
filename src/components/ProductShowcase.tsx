@@ -10,32 +10,28 @@ const ProductShowcase = () => {
     {
       title: "Kids Bikes",
       description: "Safe, colorful, and perfectly sized for young adventurers",
-      image: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?w=500",
-      price: "₹3,500 - ₹8,000",
+      image: "https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=500&q=80",
       badge: "Best Seller",
       features: ["Safety First", "Adjustable", "Bright Colors"]
     },
     {
       title: "Mountain Bikes",
       description: "Rugged bikes built for trails, hills, and adventure",
-      image: "https://images.unsplash.com/photo-1544191696-15693072fb64?w=500",
-      price: "₹15,000 - ₹45,000",
+      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
       badge: "Adventure Ready",
       features: ["21-Speed", "Suspension", "All-Terrain"]
     },
     {
       title: "Hybrid Bikes",
       description: "Perfect blend of comfort and performance for city rides",
-      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500",
-      price: "₹12,000 - ₹25,000",
+      image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500&q=80",
       badge: "Most Popular",
       features: ["Comfortable", "Versatile", "City & Trail"]
     },
     {
       title: "Accessories",
       description: "Helmets, lights, locks, and everything you need",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500",
-      price: "₹200 - ₹5,000",
+      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
       badge: "Essential",
       features: ["Safety Gear", "Maintenance", "Comfort"]
     }
@@ -69,7 +65,6 @@ const ProductShowcase = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">{category.title}</CardTitle>
                 <CardDescription>{category.description}</CardDescription>
-                <div className="text-primary font-semibold">{category.price}</div>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex flex-wrap gap-2 mb-4">

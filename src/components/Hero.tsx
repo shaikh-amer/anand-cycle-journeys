@@ -63,7 +63,7 @@ const Hero = () => {
           <div className="relative">
             <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
               <img
-                src="/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png"
+                src="/lovable-uploads/ed3cb4f3-7175-4d6d-a02e-e383bd9df95a.png"
                 alt="Anand Cycle Store Logo"
                 className="w-full max-w-md mx-auto animate-scale-in"
               />
