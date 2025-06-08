@@ -95,7 +95,7 @@ const Billing = () => {
   const generatePDFBlob = async () => {
     if (!billPreviewRef.current) return null;
     const element = billPreviewRef.current;
-    return await html2pdf().from(element).outputPdf('blob');
+    return await html2pdf().from(element).output('blob');
   };
 
   const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
@@ -121,7 +121,7 @@ const Billing = () => {
       const pdfBlob = await generatePDFBlob();
       if (!pdfBlob) throw new Error('PDF generation failed');
       const pdfUrl = await uploadPDFToCloudinary(pdfBlob, fileName);
-      // Format phone: remove leading 0, prepend 91
+      console.log('Cloudinary PDF URL:', pdfUrl);
       let phone = customerInfo.phone.replace(/^0+/, '');
       if (!phone.startsWith('91')) phone = '91' + phone;
       const total = calculateGrandTotal();
