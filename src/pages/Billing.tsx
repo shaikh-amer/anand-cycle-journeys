@@ -95,7 +95,7 @@ const Billing = () => {
   const generatePDFBlob = async () => {
     if (!billPreviewRef.current) return null;
     const element = billPreviewRef.current;
-    return await html2pdf().from(element).output('blob');
+    return await html2pdf().from(element).toPdf().output('blob');
   };
 
   const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
@@ -103,6 +103,7 @@ const Billing = () => {
     formData.append('file', pdfBlob, fileName);
     formData.append('upload_preset', CLOUDINARY_PRESET);
     formData.append('folder', 'bills');
+    formData.append('resource_type', 'raw');
     const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
     if (!res.ok) throw new Error('Cloudinary upload failed');
     const data = await res.json();
