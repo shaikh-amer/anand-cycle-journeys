@@ -13,7 +13,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import html2pdf from 'html2pdf.js';
 
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/auto/upload';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
 
 const Billing = () => {
@@ -103,7 +103,6 @@ const Billing = () => {
     formData.append('file', pdfBlob, fileName);
     formData.append('upload_preset', CLOUDINARY_PRESET);
     formData.append('folder', 'bills');
-    formData.append('resource_type', 'raw');
     const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
     if (!res.ok) throw new Error('Cloudinary upload failed');
     const data = await res.json();
