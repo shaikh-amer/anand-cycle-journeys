@@ -38,7 +38,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <Card key={index} className="card-hover text-center border-0 shadow-md">
               <CardContent className="pt-8 pb-6">
