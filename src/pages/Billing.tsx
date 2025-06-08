@@ -62,7 +62,7 @@ const Billing = () => {
   const calculateGST = () => includeGST ? Math.round(calculateTotal() * 0.18) : 0;
   const calculateGrandTotal = () => calculateTotal() + calculateGST();
 
-  const generateBill = () => {
+  const generateBill = async () => {
     if (!customerInfo.name || billItems.some(item => !item.name)) {
       toast({
         title: "Missing Information",
@@ -71,11 +71,20 @@ const Billing = () => {
       });
       return;
     }
-
     toast({
       title: "Bill Generated Successfully!",
       description: "Bill #" + Date.now().toString().slice(-6) + " has been created"
     });
+    try {
+      await handleGeneratePDF(false);
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+      toast({
+        title: "PDF Generation Failed",
+        description: err.message || String(err),
+        variant: "destructive"
+      });
+    }
   };
 
   const shareOnWhatsApp = () => {
@@ -215,7 +224,7 @@ const Billing = () => {
 
               {/* Actions */}
               <div className="flex flex-wrap gap-4">
-                <Button onClick={() => { generateBill(); handleGeneratePDF(false); }} className="btn-primary">
+                <Button onClick={generateBill} className="btn-primary">
                   <Receipt className="w-4 h-4 mr-2" />
                   Generate Bill
                 </Button>
