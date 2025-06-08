@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,8 @@ import { Plus, Minus, Receipt, Share, Printer, Search } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const Billing = () => {
   const { toast } = useToast();
@@ -21,6 +23,7 @@ const Billing = () => {
     address: ''
   });
   const [includeGST, setIncludeGST] = useState(false);
+  const billPreviewRef = useRef<HTMLDivElement>(null);
 
   const addItem = () => {
     const newItem = {
@@ -82,6 +85,25 @@ const Billing = () => {
     
     const encodedText = encodeURIComponent(billText);
     window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+  };
+
+  const handleGeneratePDF = async (autoPrint = false) => {
+    if (!billPreviewRef.current) return;
+    const input = billPreviewRef.current;
+    const canvas = await html2canvas(input, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    if (autoPrint) {
+      window.open(pdf.output('bloburl'), '_blank');
+      setTimeout(() => {
+        pdf.autoPrint();
+      }, 500);
+    } else {
+      pdf.save(`Invoice_${customerInfo.name || 'Customer'}.pdf`);
+    }
   };
 
   return (
@@ -193,7 +215,7 @@ const Billing = () => {
 
               {/* Actions */}
               <div className="flex flex-wrap gap-4">
-                <Button onClick={generateBill} className="btn-primary">
+                <Button onClick={() => { generateBill(); handleGeneratePDF(false); }} className="btn-primary">
                   <Receipt className="w-4 h-4 mr-2" />
                   Generate Bill
                 </Button>
@@ -201,7 +223,7 @@ const Billing = () => {
                   <Share className="w-4 h-4 mr-2" />
                   Share on WhatsApp
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => handleGeneratePDF(true)}>
                   <Printer className="w-4 h-4 mr-2" />
                   Print
                 </Button>
@@ -216,7 +238,7 @@ const Billing = () => {
                   <CardTitle>Bill Preview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-white rounded-lg shadow p-6 max-w-lg mx-auto border">
+                  <div ref={billPreviewRef} className="bg-white rounded-lg shadow p-6 max-w-lg mx-auto border">
                     <div className="flex items-center justify-between mb-4">
                       <img src={"/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png"} alt="Anand Cycle Store Logo" className="h-16 w-16 object-contain" />
                       <div className="text-right">
