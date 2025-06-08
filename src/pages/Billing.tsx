@@ -11,6 +11,10 @@ import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
+
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/auto/upload';
+const CLOUDINARY_PRESET = 'unsigned_bills';
 
 const Billing = () => {
   const { toast } = useToast();
@@ -24,6 +28,7 @@ const Billing = () => {
   });
   const [includeGST, setIncludeGST] = useState(false);
   const billPreviewRef = useRef<HTMLDivElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const addItem = () => {
     const newItem = {
@@ -87,13 +92,47 @@ const Billing = () => {
     }
   };
 
-  const shareOnWhatsApp = () => {
-    const billText = `*ANAND CYCLE STORES*\nWHOLE SALE & RETAIL\n\nCustomer: ${customerInfo.name}\nPhone: ${customerInfo.phone}\n\n` +
-      billItems.map(item => `${item.name} - Qty: ${item.quantity} x ₹${item.rate} = ₹${item.amount}`).join('\n') +
-      `\n\n*Total: ₹${calculateTotal()}*`;
-    
-    const encodedText = encodeURIComponent(billText);
-    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+  const generatePDFBlob = async () => {
+    if (!billPreviewRef.current) return null;
+    const element = billPreviewRef.current;
+    return await html2pdf().from(element).outputPdf('blob');
+  };
+
+  const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
+    const formData = new FormData();
+    formData.append('file', pdfBlob, fileName);
+    formData.append('upload_preset', CLOUDINARY_PRESET);
+    formData.append('folder', 'bills');
+    const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
+    if (!res.ok) throw new Error('Cloudinary upload failed');
+    const data = await res.json();
+    return data.secure_url;
+  };
+
+  const shareOnWhatsApp = async () => {
+    if (!customerInfo.name || !customerInfo.phone) {
+      toast({ title: 'Missing Info', description: 'Enter customer name and phone', variant: 'destructive' });
+      return;
+    }
+    setIsUploading(true);
+    try {
+      const billNo = Date.now().toString().slice(-6);
+      const fileName = `${customerInfo.name.replace(/\s+/g, '_')}_BillNo${billNo}.pdf`;
+      const pdfBlob = await generatePDFBlob();
+      if (!pdfBlob) throw new Error('PDF generation failed');
+      const pdfUrl = await uploadPDFToCloudinary(pdfBlob, fileName);
+      // Format phone: remove leading 0, prepend 91
+      let phone = customerInfo.phone.replace(/^0+/, '');
+      if (!phone.startsWith('91')) phone = '91' + phone;
+      const total = calculateGrandTotal();
+      const message = `Hello ${customerInfo.name},\nYour bill of ₹${total} is ready.\nDownload: ${pdfUrl}`;
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank');
+    } catch (err) {
+      toast({ title: 'WhatsApp Share Failed', description: err.message || String(err), variant: 'destructive' });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleGeneratePDF = async (autoPrint = false) => {
@@ -228,9 +267,9 @@ const Billing = () => {
                   <Receipt className="w-4 h-4 mr-2" />
                   Generate Bill
                 </Button>
-                <Button onClick={shareOnWhatsApp} className="btn-secondary">
+                <Button onClick={shareOnWhatsApp} className="btn-secondary" disabled={isUploading}>
                   <Share className="w-4 h-4 mr-2" />
-                  Share on WhatsApp
+                  {isUploading ? 'Uploading...' : 'Share on WhatsApp'}
                 </Button>
                 <Button variant="outline" onClick={() => handleGeneratePDF(true)}>
                   <Printer className="w-4 h-4 mr-2" />
