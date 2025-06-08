@@ -61,11 +61,11 @@ const Hero = () => {
           </div>
 
           <div className="relative">
-            <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-3xl p-4 sm:p-8 border border-white/20">
               <img
                 src="/lovable-uploads/ed3cb4f3-7175-4d6d-a02e-e383bd9df95a.png"
                 alt="Anand Cycle Store Logo"
-                className="w-full max-w-md mx-auto animate-scale-in"
+                className="w-full max-w-xs sm:max-w-md mx-auto animate-scale-in"
               />
             </div>
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-secondary/20 rounded-full blur-xl"></div>
