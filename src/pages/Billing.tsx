@@ -15,10 +15,10 @@ import html2canvas from 'html2canvas';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
 
-// Add CSS for smaller font and fixed width for PDF export
+// Update CSS for A4 aspect ratio and full-page fill
 const pdfStyles = `
-  .pdf-invoice-container { width: 650px !important; margin: 0 auto; font-size: 11px !important; }
-  .pdf-invoice-container * { font-size: 11px !important; }
+  .pdf-invoice-container { width: 794px !important; height: 1123px !important; margin: 0 auto; display: flex; flex-direction: column; justify-content: space-between; }
+  .pdf-invoice-container * { font-size: 12px !important; }
 `;
 
 const Billing = () => {
@@ -100,21 +100,25 @@ const Billing = () => {
   const generatePDFBlob = async () => {
     if (!billPreviewRef.current) return null;
     const element = billPreviewRef.current;
-    // Render the invoice as a canvas
-    const canvas = await html2canvas(element, { scale: 2 });
+    // Inject style for PDF export
+    const style = document.createElement('style');
+    style.innerHTML = pdfStyles;
+    element.appendChild(style);
+    // Clone the element to avoid modifying the live DOM
+    const clone = element.cloneNode(true);
+    // Remove style after clone
+    element.removeChild(style);
+    // Render the invoice as a canvas with A4 aspect ratio
+    const canvas = await html2canvas(clone as HTMLElement, {
+      scale: 2,
+      width: 794,
+      height: 1123
+    });
     const imgData = canvas.toDataURL('image/png');
-    // Create a single-page PDF and scale the image to fit
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    // Calculate image dimensions to fit the page
-    let imgWidth = pdfWidth;
-    let imgHeight = (canvas.height * pdfWidth) / canvas.width;
-    if (imgHeight > pdfHeight) {
-      imgHeight = pdfHeight;
-      imgWidth = (canvas.width * pdfHeight) / canvas.height;
-    }
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
     return pdf.output('blob');
   };
 
