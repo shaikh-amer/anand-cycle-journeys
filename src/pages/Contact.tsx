@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -49,7 +48,7 @@ const Contact = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-primary mb-2">Call Us</h3>
                   <p className="text-muted-foreground text-sm">
-                    9823285728<br />
+                    9393559292<br />
                     9960708348
                   </p>
                 </CardContent>
@@ -158,7 +157,7 @@ const Contact = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="btn-primary">
                   <Phone className="w-4 h-4 mr-2" />
-                  Call: 9823285728
+                  Call: 9393559292
                 </Button>
                 <Button size="lg" className="btn-secondary">
                   <MessageCircle className="w-4 h-4 mr-2" />

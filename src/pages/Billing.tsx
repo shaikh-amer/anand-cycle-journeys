@@ -294,7 +294,7 @@ const Billing = () => {
                         <div className="text-xs text-muted-foreground">Invoice ID: {Date.now().toString().slice(-6)}</div>
                       </div>
                     </div>
-                    <div className="mb-2 text-sm text-muted-foreground">M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>Mob: 9823285728, 9960708348</div>
+                    <div className="mb-2 text-sm text-muted-foreground">M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>Mob: 9393559292, 9960708348</div>
                     <div className="border-b my-2"></div>
                     <div className="mb-2">
                       <span className="font-semibold text-primary">INVOICE TO:</span><br/>

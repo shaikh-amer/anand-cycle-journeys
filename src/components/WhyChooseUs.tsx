@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Shield, Award, Users, Wrench } from 'lucide-react';
 
@@ -62,7 +61,7 @@ const WhyChooseUs = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
             <div>📍 M.G. Road, Nanded</div>
-            <div>📞 9823285728</div>
+            <div>📞 9393559292</div>
             <div>🕒 Open 7 days a week</div>
             <div>🔧 Expert repairs available</div>
           </div>

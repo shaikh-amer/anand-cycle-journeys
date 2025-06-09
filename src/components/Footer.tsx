@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
@@ -72,7 +71,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-secondary" />
                 <div className="text-sm text-primary-foreground/80">
-                  <div>9823285728</div>
+                  <div>9393559292</div>
                   <div>9960708348</div>
                 </div>
               </div>
