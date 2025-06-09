@@ -16,10 +16,10 @@ import html2pdf from 'html2pdf.js';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
 
-// Add CSS for page-break
+// Add CSS for smaller font and fixed width for PDF export
 const pdfStyles = `
-  .pdf-invoice-container { width: 800px; margin: 0 auto; }
-  .page-break { page-break-before: always; }
+  .pdf-invoice-container { width: 650px !important; margin: 0 auto; font-size: 11px !important; }
+  .pdf-invoice-container * { font-size: 11px !important; }
 `;
 
 const Billing = () => {
@@ -109,24 +109,15 @@ const Billing = () => {
     const clone = element.cloneNode(true);
     // Remove style after clone
     element.removeChild(style);
-    // Insert page breaks after every 15 rows if needed
-    const rows = clone.querySelectorAll('tbody tr');
-    if (rows.length > 15) {
-      for (let i = 15; i < rows.length; i += 15) {
-        const pageBreak = document.createElement('div');
-        pageBreak.className = 'page-break';
-        rows[i - 1].parentNode.insertBefore(pageBreak, rows[i]);
-      }
-    }
-    // Use html2pdf with pagebreak and scaling options
+    // Use html2pdf with scaling to fit one page
     return await html2pdf()
       .set({
-        margin: 10,
+        margin: 5,
         filename: 'Invoice.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 0.6 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak: { mode: [] } // No page breaks
       })
       .from(clone)
       .toPdf()
