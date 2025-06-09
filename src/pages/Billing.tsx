@@ -11,7 +11,6 @@ import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import html2pdf from 'html2pdf.js';
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
@@ -101,27 +100,22 @@ const Billing = () => {
   const generatePDFBlob = async () => {
     if (!billPreviewRef.current) return null;
     const element = billPreviewRef.current;
-    // Inject style for PDF export
-    const style = document.createElement('style');
-    style.innerHTML = pdfStyles;
-    element.appendChild(style);
-    // Clone the element to avoid modifying the live DOM
-    const clone = element.cloneNode(true);
-    // Remove style after clone
-    element.removeChild(style);
-    // Use html2pdf with scaling to fit one page
-    return await html2pdf()
-      .set({
-        margin: 5,
-        filename: 'Invoice.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 0.6 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: [] } // No page breaks
-      })
-      .from(clone)
-      .toPdf()
-      .output('blob');
+    // Render the invoice as a canvas
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    // Create a single-page PDF and scale the image to fit
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    // Calculate image dimensions to fit the page
+    let imgWidth = pdfWidth;
+    let imgHeight = (canvas.height * pdfWidth) / canvas.width;
+    if (imgHeight > pdfHeight) {
+      imgHeight = pdfHeight;
+      imgWidth = (canvas.width * pdfHeight) / canvas.height;
+    }
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    return pdf.output('blob');
   };
 
   const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
