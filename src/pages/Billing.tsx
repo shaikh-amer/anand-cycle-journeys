@@ -16,6 +16,12 @@ import html2pdf from 'html2pdf.js';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
 
+// Add CSS for page-break
+const pdfStyles = `
+  .pdf-invoice-container { width: 800px; margin: 0 auto; }
+  .page-break { page-break-before: always; }
+`;
+
 const Billing = () => {
   const { toast } = useToast();
   const [billItems, setBillItems] = useState([
@@ -95,7 +101,36 @@ const Billing = () => {
   const generatePDFBlob = async () => {
     if (!billPreviewRef.current) return null;
     const element = billPreviewRef.current;
-    return await html2pdf().from(element).toPdf().output('blob');
+    // Inject style for PDF export
+    const style = document.createElement('style');
+    style.innerHTML = pdfStyles;
+    element.appendChild(style);
+    // Clone the element to avoid modifying the live DOM
+    const clone = element.cloneNode(true);
+    // Remove style after clone
+    element.removeChild(style);
+    // Insert page breaks after every 15 rows if needed
+    const rows = clone.querySelectorAll('tbody tr');
+    if (rows.length > 15) {
+      for (let i = 15; i < rows.length; i += 15) {
+        const pageBreak = document.createElement('div');
+        pageBreak.className = 'page-break';
+        rows[i - 1].parentNode.insertBefore(pageBreak, rows[i]);
+      }
+    }
+    // Use html2pdf with pagebreak and scaling options
+    return await html2pdf()
+      .set({
+        margin: 10,
+        filename: 'Invoice.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      })
+      .from(clone)
+      .toPdf()
+      .output('blob');
   };
 
   const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
@@ -286,7 +321,7 @@ const Billing = () => {
                   <CardTitle>Bill Preview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div ref={billPreviewRef} className="bg-white rounded-lg shadow p-6 max-w-lg mx-auto border">
+                  <div ref={billPreviewRef} className="pdf-invoice-container bg-white rounded-lg shadow p-6 max-w-lg mx-auto border">
                     <div className="flex items-center justify-between mb-4">
                       <img src={"/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png"} alt="Anand Cycle Store Logo" className="h-16 w-16 object-contain" />
                       <div className="text-right">
