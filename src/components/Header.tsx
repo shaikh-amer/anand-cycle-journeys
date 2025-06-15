@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -25,7 +26,7 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src="/lovable-uploads/0ac68c5d-e4f1-4711-adcc-18b303c46f65.png" alt="New Anand Cycle Store" className="h-14" />
+            <img src="/lovable-uploads/0ac68c5d-e4f1-4711-adcc-18b303c46f65.png" alt="New Anand Cycle Store" className="h-14 w-14 rounded-full object-cover" />
           </Link>
 
           {/* Desktop Navigation */}
