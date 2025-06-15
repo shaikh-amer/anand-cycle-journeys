@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import { Search, Filter } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BottomNav from '@/components/BottomNav';
+import WhatsappIcon from '@/components/icons/WhatsappIcon';
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -249,6 +249,13 @@ const Products = () => {
     { value: 'accessories', label: 'Accessories' }
   ];
 
+  const handleWhatsAppInquiry = (productName: string) => {
+    const phoneNumber = "919823285728"; // Extracted from the logo image provided.
+    const message = `Hello, I'm interested in the "${productName}" bike. Could you please provide more details?`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
@@ -337,14 +344,13 @@ const Products = () => {
                         ))}
                       </div>
                       
-                      <div className="flex gap-2">
-                        <Button className="flex-1 btn-primary">
-                          Add to Cart
-                        </Button>
-                        <Button variant="outline" className="flex-1">
-                          View Details
-                        </Button>
-                      </div>
+                      <Button
+                        className="w-full btn-primary"
+                        onClick={() => handleWhatsAppInquiry(product.name)}
+                      >
+                        <WhatsappIcon className="h-5 w-5" />
+                        Inquire on WhatsApp
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
