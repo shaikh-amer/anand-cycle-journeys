@@ -66,7 +66,6 @@ const Hero = () => {
                 src="/lovable-uploads/035914c5-1c5f-48a9-b16b-be745f3140ec.png"
                 alt="Anand Cycle Store Logo"
                 className="w-full h-auto min-w-[200px] max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] mx-auto block animate-scale-in"
-                style={{ display: 'block !important', visibility: 'visible !important' }}
               />
             </div>
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-secondary/20 rounded-full blur-xl"></div>
