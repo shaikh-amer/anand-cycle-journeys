@@ -1,9 +1,9 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Users, Award, Heart, Bike } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BottomNav from '@/components/BottomNav';
 import { Link } from 'react-router-dom';
 
 const About = () => {
@@ -57,7 +57,7 @@ const About = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1">
+      <main className="flex-1 pb-16 md:pb-0">
         {/* Hero Section */}
         <section className="hero-gradient text-white py-20">
           <div className="container mx-auto px-4">
@@ -222,6 +222,7 @@ const About = () => {
       </main>
       
       <Footer />
+      <BottomNav />
     </div>
   );
 };
