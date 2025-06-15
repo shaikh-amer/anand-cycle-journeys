@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Billing from "./pages/Billing";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import LiveChatWidget from "@/components/LiveChatWidget";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        <LiveChatWidget />
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
