@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Billing from "./pages/Billing";
 import Dashboard from "./pages/Dashboard";
 import LiveChat from "./pages/LiveChat";
+import LiveChatSession from "./pages/LiveChatSession";
 import NotFound from "./pages/NotFound";
 import LiveChatWidget from "@/components/LiveChatWidget";
 
@@ -51,6 +52,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <LiveChat />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/live-chat/:id" 
+              element={
+                <ProtectedRoute>
+                  <LiveChatSession />
                 </ProtectedRoute>
               } 
             />

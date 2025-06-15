@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -107,7 +106,7 @@ const LiveChat = () => {
                           Started {formatDistanceToNow(new Date(session.created_at), { addSuffix: true })}
                         </p>
                       </div>
-                      <Button asChild variant="outline" disabled>
+                      <Button asChild variant="outline">
                         <Link to={`/live-chat/${session.id}`}> 
                           Open Chat <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
