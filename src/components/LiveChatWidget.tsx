@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 type Message = {
   id: string;
   content: string;
-  sender_type: 'user' | 'admin';
+  sender_type: string;
   created_at: string;
 };
 
