@@ -156,6 +156,86 @@ const Products = () => {
       image: "/lovable-uploads/d9eaba64-5040-40ca-a5fd-91783d2cb7a4.png",
       description: "Smaller kids bike with red blade graphics",
       features: ["16\" wheels", "Training wheels", "Red graphics", "Front basket"]
+    },
+    {
+      id: 19,
+      name: "Blade T.T/EVA 14.2.40",
+      category: "kids",
+      image: "/lovable-uploads/28587fe5-b67a-4817-94f5-f0c3bd41c5b4.png",
+      description: "Kids bike with turquoise and orange blade design",
+      features: ["14\" wheels", "Training wheels", "Front basket", "Turquoise frame"]
+    },
+    {
+      id: 20,
+      name: "Blade T.T/EVA 16.2.40",
+      category: "kids",
+      image: "/lovable-uploads/45324278-0968-486b-acfd-c78554dcfb9b.png",
+      description: "Kids bike with green and yellow blade graphics",
+      features: ["16\" wheels", "Training wheels", "Green frame", "Colorful graphics"]
+    },
+    {
+      id: 21,
+      name: "Veronica IBC Lady 26\"",
+      category: "hybrid",
+      image: "/lovable-uploads/7ee88311-dbac-4ad5-9409-776dddb75e87.png",
+      description: "Elegant ladies bike with basket and carrier",
+      features: ["26\" wheels", "Front basket", "Rear carrier", "Lady design", "Pink color"]
+    },
+    {
+      id: 22,
+      name: "Defender F/S D/D 20.2.40",
+      category: "mtb",
+      image: "/lovable-uploads/99e8d27a-d46d-488e-a5d4-3a8443baf414.png",
+      description: "Full suspension mountain bike with dual disc brakes",
+      features: ["20\" wheels", "Full suspension", "Dual disc brakes", "Mountain bike"]
+    },
+    {
+      id: 23,
+      name: "Defender IC D/D 20.2.40",
+      category: "mtb",
+      image: "/lovable-uploads/c2c221fa-ff96-4f1c-9858-c640efeed896.png",
+      description: "Mountain bike with rear carrier and dual disc brakes",
+      features: ["20\" wheels", "Rear carrier", "Dual disc brakes", "White frame"]
+    },
+    {
+      id: 24,
+      name: "Stella 26.1.95",
+      category: "hybrid",
+      image: "/lovable-uploads/e330ec70-0d2f-4abb-b0a7-3ecc332cba4d.png",
+      description: "Beautiful turquoise ladies bike with decorative patterns",
+      features: ["26\" wheels", "Front basket", "Decorative patterns", "Turquoise color"]
+    },
+    {
+      id: 25,
+      name: "Defender IC 24.2.40/26.2.40",
+      category: "mtb",
+      image: "/lovable-uploads/4eceb290-90cb-46ea-910d-fcac403d5aa7.png",
+      description: "Mountain bike with rear carrier available in multiple sizes",
+      features: ["Multi-size options", "Rear carrier", "Silver frame", "Mountain bike"]
+    },
+    {
+      id: 26,
+      name: "Victory D/D 24.300/26.300",
+      category: "mtb",
+      image: "/lovable-uploads/a88442c5-b545-4bb7-8d8f-baa92f309e50.png",
+      description: "Victory series mountain bike with dual disc brakes",
+      features: ["24\"/26\" options", "Dual disc brakes", "Black frame", "Victory series"]
+    },
+    {
+      id: 27,
+      name: "Bubble IBC T.T/EVA 16.2.40/20.2.40",
+      category: "kids",
+      image: "/lovable-uploads/de9ede66-afb0-4128-8ffd-e24d3b7721e6.png",
+      description: "Colorful bubble-themed kids bike with basket",
+      features: ["Multi-size options", "Training wheels", "Front basket", "Bubble design", "Pink accents"]
+    },
+    {
+      id: 28,
+      name: "Bubble T.T/EVA 16.2.40/20.2.40",
+      category: "kids",
+      image: "/lovable-uploads/19c7b92f-de0e-47ae-bd13-781b7198b8b5.png",
+      description: "Bubble-themed kids bike with orange and black design",
+      features: ["Multi-size options", "Training wheels", "Front basket", "Bubble design", "Orange accents"]
     }
   ];
 
