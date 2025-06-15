@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -93,6 +92,70 @@ const Products = () => {
       image: "/lovable-uploads/c843e4da-ff4d-49e4-a5d1-d5faf4e147dd.png",
       description: "Classic gents bicycle with single brake system",
       features: ["26\" wheels", "Single brake", "Classic design"]
+    },
+    {
+      id: 11,
+      name: "Fighter (Gents) D/B 28.1.50",
+      category: "hybrid",
+      image: "/lovable-uploads/ecd28f12-af48-4628-9a1c-9185ce4df01f.png",
+      description: "Classic gents bicycle with dual brake system",
+      features: ["28\" wheels", "Dual brake", "Victory branded", "Gents design"]
+    },
+    {
+      id: 12,
+      name: "Shoorveer IC 26.1.50",
+      category: "hybrid",
+      image: "/lovable-uploads/4d035791-9915-4d58-9bb7-d3e66307f876.png",
+      description: "Stylish hybrid bike with rear carrier",
+      features: ["26\" wheels", "Rear carrier", "Red accents", "Single gear"]
+    },
+    {
+      id: 13,
+      name: "Jumbo EVA/T.T 20.2.40",
+      category: "kids",
+      image: "/lovable-uploads/9761bc6e-78f1-4174-ba7b-bdadca31d764.png",
+      description: "Colorful kids bike with elephant theme and training wheels",
+      features: ["Training wheels", "Elephant theme", "EVA foam", "20\" wheels"]
+    },
+    {
+      id: 14,
+      name: "Hangover 26",
+      category: "mtb",
+      image: "/lovable-uploads/67cd574c-b5c6-4023-ad53-125ad7e1dbbf.png",
+      description: "Mountain bike with rear carrier and robust build",
+      features: ["26\" wheels", "Rear carrier", "Mountain bike", "All-terrain"]
+    },
+    {
+      id: 15,
+      name: "Blade IC T.T/EVA 14.2.40",
+      category: "kids",
+      image: "/lovable-uploads/d639a440-c5d5-4951-8cea-7b1c7dfa60fa.png",
+      description: "Colorful kids bike with blade theme and basket",
+      features: ["14\" wheels", "Training wheels", "Front basket", "Blade design"]
+    },
+    {
+      id: 16,
+      name: "Blade IC T.T/EVA 20.2.40",
+      category: "kids",
+      image: "/lovable-uploads/aa10c2c7-7f4b-4998-b293-c245029cccc9.png",
+      description: "Kids bike with vibrant blade graphics and accessories",
+      features: ["20\" wheels", "Training wheels", "Colorful graphics", "Front basket"]
+    },
+    {
+      id: 17,
+      name: "Blade T.T/EVA 20.2.40",
+      category: "kids",
+      image: "/lovable-uploads/d429efd0-6080-4dc4-b794-8135328b6e3c.png",
+      description: "Kids bike with yellow and red blade design",
+      features: ["20\" wheels", "Training wheels", "Yellow accents", "Blade theme"]
+    },
+    {
+      id: 18,
+      name: "Blade IC T.T/EVA 16.2.40",
+      category: "kids",
+      image: "/lovable-uploads/d9eaba64-5040-40ca-a5fd-91783d2cb7a4.png",
+      description: "Smaller kids bike with red blade graphics",
+      features: ["16\" wheels", "Training wheels", "Red graphics", "Front basket"]
     }
   ];
 
