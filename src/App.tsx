@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Billing from "./pages/Billing";
 import Dashboard from "./pages/Dashboard";
+import LiveChat from "./pages/LiveChat";
 import NotFound from "./pages/NotFound";
 import LiveChatWidget from "@/components/LiveChatWidget";
 
@@ -42,6 +43,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/live-chat" 
+              element={
+                <ProtectedRoute>
+                  <LiveChat />
                 </ProtectedRoute>
               } 
             />
