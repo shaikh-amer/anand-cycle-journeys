@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { MapPin, Phone, Clock, Mail } from 'lucide-react';
+import { MapPin, Phone, Clock, MessageSquare as Whatsapp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -84,8 +84,11 @@ const Footer = () => {
               </div>
             </div>
             
-            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full mt-4">
-              WhatsApp Us
+            <Button asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full mt-4">
+              <a href="https://wa.me/919393559292" target="_blank" rel="noopener noreferrer">
+                <Whatsapp />
+                WhatsApp Us
+              </a>
             </Button>
           </div>
         </div>
