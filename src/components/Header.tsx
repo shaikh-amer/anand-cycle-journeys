@@ -24,14 +24,8 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">A</span>
-            </div>
-            <div>
-              <h1 className="font-bold text-xl text-primary">Anand Cycle Store</h1>
-              <p className="text-xs text-muted-foreground">Pedal Your Dreams Forward</p>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img src="/lovable-uploads/0ac68c5d-e4f1-4711-adcc-18b303c46f65.png" alt="New Anand Cycle Store" className="h-14" />
           </Link>
 
           {/* Desktop Navigation */}
