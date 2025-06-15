@@ -51,12 +51,12 @@ const ProductShowcase = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {categories.map((category, index) => (
-            <Card key={index} className="card-hover border-0 shadow-md">
-              <div className="relative overflow-hidden rounded-t-lg">
+            <Card key={index} className="card-hover border-0 shadow-md group">
+              <div className="relative overflow-hidden rounded-t-lg bg-gray-100">
                 <img
                   src={category.image}
                   alt={category.title}
-                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="w-full h-48 object-contain p-2 transition-transform duration-300 group-hover:scale-110"
                 />
                 <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground">
                   {category.badge}

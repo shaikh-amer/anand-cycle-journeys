@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -312,11 +313,11 @@ const Products = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
               <Card key={product.id} className="card-hover border-0 shadow-md">
-                <div className="relative overflow-hidden rounded-t-lg">
+                <div className="relative overflow-hidden rounded-t-lg bg-gray-100">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                    className="w-full h-48 object-contain p-2 transition-transform duration-300 hover:scale-110"
                   />
                   <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground capitalize">
                     {product.category}
