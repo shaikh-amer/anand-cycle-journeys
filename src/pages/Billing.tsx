@@ -11,9 +11,11 @@ import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import html2pdf from 'html2pdf.js';
+import { supabase } from '@/integrations/supabase/client';
 
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
-const CLOUDINARY_PRESET = 'unsigned_bills';
+// The Cloudinary constants are no longer needed.
+// const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
+// const CLOUDINARY_PRESET = 'unsigned_bills';
 
 // Update CSS for A4 aspect ratio and full-page fill
 const pdfStyles = `
@@ -124,15 +126,27 @@ const Billing = () => {
     return html2pdf().from(element).set(opt).outputPdf('blob');
   };
 
-  const uploadPDFToCloudinary = async (pdfBlob: Blob, fileName: string) => {
-    const formData = new FormData();
-    formData.append('file', pdfBlob, fileName);
-    formData.append('upload_preset', CLOUDINARY_PRESET);
-    formData.append('folder', 'bills');
-    const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
-    if (!res.ok) throw new Error('Cloudinary upload failed');
-    const data = await res.json();
-    return data.secure_url;
+  const uploadPDFToSupabase = async (pdfBlob: Blob, fileName: string) => {
+    const { data, error } = await supabase.storage
+      .from('bills')
+      .upload(fileName, pdfBlob, {
+        cacheControl: '3600',
+        upsert: true,
+      });
+
+    if (error) {
+      throw new Error('Supabase upload failed: ' + error.message);
+    }
+    
+    const { data: publicUrlData } = supabase.storage
+      .from('bills')
+      .getPublicUrl(data.path);
+
+    if (!publicUrlData) {
+        throw new Error('Could not get public URL for the uploaded file.');
+    }
+
+    return publicUrlData.publicUrl;
   };
 
   const shareOnWhatsApp = async () => {
@@ -146,8 +160,8 @@ const Billing = () => {
       const fileName = `${customerInfo.name.replace(/\s+/g, '_')}_BillNo${billNo}.pdf`;
       const pdfBlob = await generatePDFBlob();
       if (!pdfBlob) throw new Error('PDF generation failed');
-      const pdfUrl = await uploadPDFToCloudinary(pdfBlob, fileName);
-      console.log('Cloudinary PDF URL:', pdfUrl);
+      const pdfUrl = await uploadPDFToSupabase(pdfBlob, fileName);
+      console.log('Supabase PDF URL:', pdfUrl);
       let phone = customerInfo.phone.replace(/^0+/, '');
       if (!phone.startsWith('91')) phone = '91' + phone;
       const total = calculateGrandTotal();
