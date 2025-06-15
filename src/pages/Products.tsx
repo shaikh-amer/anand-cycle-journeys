@@ -16,51 +16,83 @@ const Products = () => {
   const products = [
     {
       id: 1,
-      name: "Hero Ranger DTB",
-      category: "kids",
-      image: "https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=500&q=80",
-      description: "Perfect starter bike for kids",
-      features: ["16-inch wheels", "Training wheels included", "Bright colors"]
+      name: "Victory 24\"26\"27\"29\"",
+      category: "mtb",
+      image: "/lovable-uploads/2daebb57-aab9-452f-83a2-0919501752d4.png",
+      description: "High-performance mountain bike with multiple size options",
+      features: ["Multi-size options", "Disc brakes", "Durable frame"]
     },
     {
       id: 2,
-      name: "Hero Sprint Pro",
+      name: "Victory IBC 24\"26\"27\"29\"",
       category: "mtb",
-      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
-      description: "Professional mountain bike",
-      features: ["21-speed gear", "Front suspension", "Alloy frame"]
+      image: "/lovable-uploads/ef172d3f-5510-47e1-991d-ddb2f5343957.png",
+      description: "Advanced mountain bike with rear carrier",
+      features: ["Rear carrier", "Multi-gear", "All-terrain ready"]
     },
     {
       id: 3,
-      name: "Hero Kyoto",
-      category: "hybrid",
-      image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500&q=80",
-      description: "Comfort hybrid for city rides",
-      features: ["7-speed", "Comfortable seat", "City & trail ready"]
+      name: "Jumbo 10\"",
+      category: "kids",
+      image: "/lovable-uploads/cdf166e9-a8e9-4203-8d12-af6ce6b68571.png",
+      description: "Colorful kids bike with training wheels and accessories",
+      features: ["Training wheels", "Water bottle", "Basket included"]
     },
     {
       id: 4,
-      name: "Safety Helmet",
-      category: "accessories",
-      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
-      description: "ISI certified safety helmet",
-      features: ["Multiple sizes", "Ventilation", "Adjustable straps"]
+      name: "Speed 10\"",
+      category: "kids",
+      image: "/lovable-uploads/8f960652-edf8-4ffe-8f2a-a70fbe18f1f3.png",
+      description: "Racing-inspired kids bike in vibrant colors",
+      features: ["Racing design", "Training wheels", "Side support wheels"]
     },
     {
       id: 5,
-      name: "Hero Miss India",
+      name: "Flora 10\"",
       category: "kids",
-      image: "https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=500&q=80",
-      description: "Stylish bike for young girls",
-      features: ["20-inch wheels", "Basket included", "Pink design"]
+      image: "/lovable-uploads/e771f26e-b050-4657-9599-c88848286db2.png",
+      description: "Pretty pink bike designed for young girls",
+      features: ["Pink design", "Decorative elements", "Training wheels"]
     },
     {
       id: 6,
-      name: "Hero Octane",
+      name: "Teddy 10\"",
+      category: "kids",
+      image: "/lovable-uploads/fa60c363-670e-4048-a53a-984360ead868.png",
+      description: "Fun teddy bear themed bike for kids",
+      features: ["Teddy bear theme", "Orange color scheme", "Training wheels"]
+    },
+    {
+      id: 7,
+      name: "Calburn Challenge",
+      category: "hybrid",
+      image: "/lovable-uploads/84c45eaf-a2b9-47cc-ba84-bb2224110dc2.png",
+      description: "Built for the challenge, made for the thrill",
+      features: ["Professional grade", "Challenge ready", "Thrill seeker"]
+    },
+    {
+      id: 8,
+      name: "Calburn Adventure",
+      category: "hybrid",
+      image: "/lovable-uploads/3101950a-0542-470f-9765-0666cdcc7eaf.png",
+      description: "Your next adventure starts here",
+      features: ["Adventure ready", "Long distance", "Comfort design"]
+    },
+    {
+      id: 9,
+      name: "Big Bull IBC D/D 20.300",
       category: "mtb",
-      image: "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&q=80",
-      description: "Premium mountain bike",
-      features: ["24-speed", "Dual suspension", "Lightweight frame"]
+      image: "/lovable-uploads/cb0e8dd8-7409-4506-8e05-e61a0d280fd2.png",
+      description: "Heavy-duty mountain bike with dual disc brakes",
+      features: ["Dual disc brakes", "20\" frame", "Heavy duty build"]
+    },
+    {
+      id: 10,
+      name: "Fighter (Gents) S/B 26.1.50",
+      category: "hybrid",
+      image: "/lovable-uploads/c843e4da-ff4d-49e4-a5d1-d5faf4e147dd.png",
+      description: "Classic gents bicycle with single brake system",
+      features: ["26\" wheels", "Single brake", "Classic design"]
     }
   ];
 
