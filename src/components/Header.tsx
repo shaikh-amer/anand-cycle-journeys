@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Phone, MapPin } from 'lucide-react';
+import { Menu, Phone, MapPin, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -19,6 +19,10 @@ const Header = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/919393559292', '_blank');
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -44,7 +48,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Contact Info & Mobile Menu */}
+          {/* Contact Info & Mobile WhatsApp */}
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-1">
@@ -57,30 +61,15 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Mobile Menu */}
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="md:hidden">
-                  <Menu className="h-4 w-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <div className="flex flex-col space-y-4 mt-6">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`text-lg font-medium transition-colors hover:text-primary ${
-                        isActive(item.path) ? 'text-primary' : 'text-muted-foreground'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </SheetContent>
-            </Sheet>
+            {/* Mobile WhatsApp Button */}
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="md:hidden bg-green-500 hover:bg-green-600 border-green-500 text-white"
+              onClick={handleWhatsAppClick}
+            >
+              <MessageCircle className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
