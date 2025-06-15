@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = (username: string, password: string): boolean => {
     // Hardcoded admin credentials
-    if (username === 'admin' && password === 'anand123') {
+    if (username === 'admin' && password === 'Syed@1313') {
       setIsAuthenticated(true);
       localStorage.setItem('admin_authenticated', 'true');
       return true;
