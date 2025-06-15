@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import BottomNav from '@/components/BottomNav';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, ArrowRight } from 'lucide-react';
@@ -67,7 +64,7 @@ const LiveChat = () => {
   }, [refetch]);
 
   return (
-    <div className="py-8 pb-16 md:pb-8">
+    <div className="py-8">
       <div className="container mx-auto px-4">
         <Card>
           <CardHeader>

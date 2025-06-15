@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBasket, Receipt, LayoutDashboard, Info, Phone } from 'lucide-react';
+import { Home, ShoppingBasket, Receipt, LayoutDashboard, Info, Phone, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNav = () => {
@@ -11,6 +11,7 @@ const BottomNav = () => {
     { name: 'Products', path: '/products', icon: ShoppingBasket },
     { name: 'Bill Portal', path: '/billing', icon: Receipt },
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Live Chat', path: '/live-chat', icon: MessageSquare },
     { name: 'About', path: '/about', icon: Info },
     { name: 'Contact', path: '/contact', icon: Phone },
   ];
@@ -24,6 +25,7 @@ const BottomNav = () => {
 
   const getDisplayName = (name: string) => {
     if (name === 'Bill Portal') return 'Billing';
+    if (name === 'Live Chat') return 'Chat';
     return name;
   };
 
@@ -36,7 +38,7 @@ const BottomNav = () => {
               key={item.name}
               to={item.path}
               className={cn(
-                'flex flex-col items-center justify-center text-center text-muted-foreground hover:text-primary transition-colors w-1/6 pt-2 pb-1',
+                'flex flex-1 flex-col items-center justify-center text-center text-muted-foreground hover:text-primary transition-colors pt-2 pb-1',
                 isActive(item.path) ? 'text-primary' : ''
               )}
             >

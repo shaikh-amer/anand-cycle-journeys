@@ -4,7 +4,7 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 
 const Index = () => {
   return (
-    <div className="pb-16 md:pb-0">
+    <div>
       <Hero />
       <WhyChooseUs />
     </div>

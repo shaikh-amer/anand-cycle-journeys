@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -35,7 +36,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="py-8 pb-16 md:pb-8">
+    <div className="py-8">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <div>

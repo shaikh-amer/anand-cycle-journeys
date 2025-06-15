@@ -14,6 +14,7 @@ const Header = () => {
     { name: 'Products', path: '/products' },
     { name: 'Bill Portal', path: '/billing' },
     { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Live Chat', path: '/live-chat' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
