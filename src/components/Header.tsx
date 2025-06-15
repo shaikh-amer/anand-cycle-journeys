@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Menu, Phone, MapPin, MessageSquare } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -63,12 +63,11 @@ const Header = () => {
 
             {/* Mobile WhatsApp Button */}
             <Button 
-              variant="outline" 
-              size="icon" 
-              className="md:hidden bg-green-500 hover:bg-green-600 border-green-500 text-white"
               onClick={handleWhatsAppClick}
+              className="md:hidden bg-secondary text-secondary-foreground hover:bg-secondary/90 flex items-center gap-2"
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageSquare className="h-4 w-4" />
+              WhatsApp Us
             </Button>
           </div>
         </div>
