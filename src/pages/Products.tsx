@@ -5,9 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Filter } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import BottomNav from '@/components/BottomNav';
 import WhatsappIcon from '@/components/icons/WhatsappIcon';
 
 const Products = () => {
@@ -250,7 +247,7 @@ const Products = () => {
   ];
 
   const handleWhatsAppInquiry = (productName: string) => {
-    const phoneNumber = "919823285728"; // Extracted from the logo image provided.
+    const phoneNumber = "919393559292";
     const message = `Hello, I'm interested in the "${productName}" bike. Could you please provide more details?`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -263,121 +260,114 @@ const Products = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      
-      <main className="flex-1 pb-16 md:pb-0">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-4">
-              Our Bike Collection
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover the perfect bike for your journey. From kids' first rides to professional racing bikes.
-            </p>
-          </div>
-        </section>
+    <>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-4">
+            Our Bike Collection
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover the perfect bike for your journey. From kids' first rides to professional racing bikes.
+          </p>
+        </div>
+      </section>
 
-        {/* Filters */}
-        <section className="py-8 bg-background border-b">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input
-                  placeholder="Search bikes..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-muted-foreground" />
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-48">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category.value} value={category.value}>
-                        {category.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+      {/* Filters */}
+      <section className="py-8 bg-background border-b">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                placeholder="Search bikes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-muted-foreground" />
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Products Grid */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="card-hover border-0 shadow-md">
-                  <div className="relative overflow-hidden rounded-t-lg">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                    <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground capitalize">
-                      {product.category}
-                    </Badge>
-                  </div>
-                  
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">{product.name}</CardTitle>
-                    <CardDescription>{product.description}</CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap gap-2">
-                        {product.features.map((feature, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <Button
-                        className="w-full btn-primary"
-                        onClick={() => handleWhatsAppInquiry(product.name)}
-                      >
-                        <WhatsappIcon className="h-5 w-5" />
-                        Inquire on WhatsApp
-                      </Button>
+      {/* Products Grid */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts.map((product) => (
+              <Card key={product.id} className="card-hover border-0 shadow-md">
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                  />
+                  <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground capitalize">
+                    {product.category}
+                  </Badge>
+                </div>
+                
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">{product.name}</CardTitle>
+                  <CardDescription>{product.description}</CardDescription>
+                </CardHeader>
+                
+                <CardContent className="pt-0">
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2">
+                      {product.features.map((feature, idx) => (
+                        <Badge key={idx} variant="outline" className="text-xs">
+                          {feature}
+                        </Badge>
+                      ))}
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground text-lg">No products found matching your criteria.</p>
-                <Button 
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedCategory('all');
-                  }}
-                  className="mt-4"
-                >
-                  Clear Filters
-                </Button>
-              </div>
-            )}
+                    
+                    <Button
+                      className="w-full btn-primary"
+                      onClick={() => handleWhatsAppInquiry(product.name)}
+                    >
+                      <WhatsappIcon className="h-5 w-5" />
+                      Inquire on WhatsApp
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
-      </main>
-      
-      <Footer />
-      <BottomNav />
-    </div>
+
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">No products found matching your criteria.</p>
+              <Button 
+                onClick={() => {
+                  setSearchTerm('');
+                  setSelectedCategory('all');
+                }}
+                className="mt-4"
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 };
 

@@ -50,7 +50,7 @@ const Dashboard = () => {
               </Link>
             </Button>
             <Button variant="outline">Export Data</Button>
-            <Button className="btn-primary">Generate Report</Button>
+            <Button>Generate Report</Button>
           </div>
         </div>
 

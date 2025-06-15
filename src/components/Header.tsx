@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -15,7 +14,6 @@ const Header = () => {
     { name: 'Bill Portal', path: '/billing' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Live Chat', path: '/live-chat' },
-    { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
