@@ -7,10 +7,10 @@ const Hero = () => {
   return (
     <section className="hero-gradient text-white py-20 lg:py-28">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-3xl mx-auto text-center">
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 justify-center">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-secondary text-secondary" />
@@ -24,13 +24,13 @@ const Hero = () => {
                 <span className="block text-secondary">🚴‍♂️</span>
               </h1>
               
-              <p className="text-xl text-primary-foreground/90 max-w-lg">
+              <p className="text-xl text-primary-foreground/90 max-w-lg mx-auto">
                 Your trusted partner for quality bicycles, expert service, and cycling adventures. 
                 From kids' first rides to professional racing bikes.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/products">
                 <Button size="lg" className="btn-secondary group">
                   Explore Bikes
@@ -58,18 +58,6 @@ const Hero = () => {
                 <div className="text-sm text-primary-foreground/80">Bike Models</div>
               </div>
             </div>
-          </div>
-
-          <div className="relative">
-            <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-3xl p-4 sm:p-6 border border-white/20">
-              <img
-                src="/lovable-uploads/035914c5-1c5f-48a9-b16b-be745f3140ec.png"
-                alt="Anand Cycle Store Logo"
-                className="w-full h-auto min-w-[200px] max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] mx-auto block animate-scale-in"
-              />
-            </div>
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-secondary/20 rounded-full blur-xl"></div>
-            <div className="absolute -top-4 -left-4 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
           </div>
         </div>
       </div>
