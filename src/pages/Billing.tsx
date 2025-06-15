@@ -5,10 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Minus, Receipt, Share, Printer, Search } from 'lucide-react';
+import { Plus, Minus, Receipt, Share, Printer, Search, LogOut } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -23,6 +24,7 @@ const pdfStyles = `
 
 const Billing = () => {
   const { toast } = useToast();
+  const { logout } = useAuth();
   const [billItems, setBillItems] = useState([
     { id: 1, name: '', quantity: 1, rate: 0, amount: 0 }
   ]);
@@ -34,6 +36,14 @@ const Billing = () => {
   const [includeGST, setIncludeGST] = useState(false);
   const billPreviewRef = useRef<HTMLDivElement>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out"
+    });
+  };
 
   const addItem = () => {
     const newItem = {
@@ -184,9 +194,15 @@ const Billing = () => {
       
       <main className="flex-1 py-8">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
-            <p className="text-muted-foreground">Create professional invoices for your customers</p>
+          <div className="flex justify-between items-center mb-8">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
+              <p className="text-muted-foreground">Create professional invoices for your customers</p>
+            </div>
+            <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
