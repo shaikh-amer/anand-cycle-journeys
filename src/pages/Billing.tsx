@@ -10,8 +10,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/df07bq1h1/raw/upload';
 const CLOUDINARY_PRESET = 'unsigned_bills';
@@ -101,38 +100,31 @@ const Billing = () => {
       console.error('PDF generation failed:', err);
       toast({
         title: "PDF Generation Failed",
-        description: err.message || String(err),
+        description: (err as Error).message || String(err),
         variant: "destructive"
       });
     }
   };
 
-  const generatePDFBlob = async () => {
-    if (!billPreviewRef.current) return null;
+  const generatePDFBlob = () => {
+    if (!billPreviewRef.current) return Promise.resolve(null);
     const element = billPreviewRef.current;
-    // Inject style for PDF export
-    const style = document.createElement('style');
-    style.innerHTML = pdfStyles;
-    element.appendChild(style);
-    // Clone the element to avoid modifying the live DOM
-    const clone = element.cloneNode(true);
-    // Remove style after clone
-    element.removeChild(style);
-    // Render the invoice as a canvas with A4 aspect ratio
-    const canvas = await html2canvas(clone as HTMLElement, {
-      scale: 2,
-      width: 794,
-      height: 1123
-    });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    return pdf.output('blob');
+    const billNo = Date.now().toString().slice(-6);
+    const fileName = `${customerInfo.name.replace(/\s+/g, '_')}_BillNo${billNo}.pdf`;
+  
+    const opt = {
+      margin: [0.2, 0.2, 0.2, 0.2],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+  
+    return html2pdf().from(element).set(opt).outputPdf('blob');
   };
 
-  const uploadPDFToCloudinary = async (pdfBlob, fileName) => {
+  const uploadPDFToCloudinary = async (pdfBlob: Blob, fileName: string) => {
     const formData = new FormData();
     formData.append('file', pdfBlob, fileName);
     formData.append('upload_preset', CLOUDINARY_PRESET);
@@ -163,7 +155,7 @@ const Billing = () => {
       const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
     } catch (err) {
-      toast({ title: 'WhatsApp Share Failed', description: err.message || String(err), variant: 'destructive' });
+      toast({ title: 'WhatsApp Share Failed', description: (err as Error).message || String(err), variant: 'destructive' });
     } finally {
       setIsUploading(false);
     }
@@ -171,20 +163,38 @@ const Billing = () => {
 
   const handleGeneratePDF = async (autoPrint = false) => {
     if (!billPreviewRef.current) return;
-    const input = billPreviewRef.current;
-    const canvas = await html2canvas(input, { scale: 2 });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    const element = billPreviewRef.current;
+    const billNo = Date.now().toString().slice(-6);
+    const fileName = `Invoice_${customerInfo.name || 'Customer'}_${billNo}.pdf`;
+  
+    const opt = {
+      margin: [0.2, 0.2, 0.2, 0.2],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+  
+    const worker = html2pdf().from(element).set(opt);
+  
     if (autoPrint) {
-      window.open(pdf.output('bloburl'), '_blank');
-      setTimeout(() => {
-        pdf.autoPrint();
-      }, 500);
+      const pdfBlob = await worker.output('blob');
+      const blobUrl = URL.createObjectURL(pdfBlob);
+      const pdfWindow = window.open(blobUrl, '_blank');
+      if (pdfWindow) {
+        pdfWindow.onload = () => {
+          pdfWindow.print();
+        };
+      } else {
+        toast({
+          title: "Print Failed",
+          description: "Please disable your pop-up blocker to print.",
+          variant: "destructive"
+        });
+      }
     } else {
-      pdf.save(`Invoice_${customerInfo.name || 'Customer'}.pdf`);
+      await worker.save();
     }
   };
 
