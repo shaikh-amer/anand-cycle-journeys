@@ -16,6 +16,7 @@ import LiveChat from "./pages/LiveChat";
 import LiveChatSession from "./pages/LiveChatSession";
 import NotFound from "./pages/NotFound";
 import LiveChatWidget from "@/components/LiveChatWidget";
+import AppLayout from "@/components/AppLayout";
 
 const queryClient = new QueryClient();
 
@@ -27,34 +28,37 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route 
-              path="/billing" 
-              element={
-                <ProtectedRoute>
-                  <Billing />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/live-chat" 
-              element={
-                <ProtectedRoute>
-                  <LiveChat />
-                </ProtectedRoute>
-              } 
-            />
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route 
+                path="/billing" 
+                element={
+                  <ProtectedRoute>
+                    <Billing />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/live-chat" 
+                element={
+                  <ProtectedRoute>
+                    <LiveChat />
+                  </ProtectedRoute>
+                } 
+              />
+            </Route>
+            
             <Route 
               path="/live-chat/:id" 
               element={

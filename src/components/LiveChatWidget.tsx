@@ -124,7 +124,7 @@ const LiveChatWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-20 md:bottom-4 right-4 z-50">
       {isOpen ? (
         <Card className="w-80 h-[28rem] flex flex-col shadow-2xl animate-fade-in">
           <CardHeader className="flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
