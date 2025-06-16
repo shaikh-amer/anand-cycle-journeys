@@ -1,4 +1,3 @@
-
 import { CustomerInfo } from '@/types/billing';
 
 export const formatPhoneNumber = (phone: string): string => {
@@ -14,14 +13,23 @@ export const formatPhoneNumber = (phone: string): string => {
 };
 
 export const createWhatsAppMessage = (customerName: string, total: number, pdfUrl: string): string => {
-  // Ensure URL has https:// prefix for clickable link
-  const formattedUrl = pdfUrl.startsWith('http') ? pdfUrl : `https://${pdfUrl}`;
+  // Ensure URL has proper https:// prefix
+  let formattedUrl = pdfUrl;
+  if (!formattedUrl.startsWith('http')) {
+    formattedUrl = `https://${formattedUrl}`;
+  }
   
-  // Create message with exact structure for clickable links
+  // WhatsApp link detection works better with this format:
+  // - Keep URL on its own line
+  // - Add space before and after URL
+  // - Use simple, clean message structure
   return `Hello ${customerName},
+
 Your bill of ₹${total} is ready.
-Download here:
-${formattedUrl}`;
+
+Download: ${formattedUrl}
+
+Thank you!`;
 };
 
 export const openWhatsAppShare = (phone: string, message: string): void => {
