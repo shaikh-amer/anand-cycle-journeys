@@ -2,21 +2,31 @@
 import { CustomerInfo } from '@/types/billing';
 
 export const formatPhoneNumber = (phone: string): string => {
-  // Clean phone number: remove leading zeros and ensure it starts with 91
-  let cleanPhone = phone.replace(/^0+/, '');
+  // Remove all non-digit characters and leading zeros
+  let cleanPhone = phone.replace(/\D/g, '').replace(/^0+/, '');
+  
+  // Ensure it starts with 91 (India country code)
   if (!cleanPhone.startsWith('91')) {
     cleanPhone = '91' + cleanPhone;
   }
+  
   return cleanPhone;
 };
 
 export const createWhatsAppMessage = (customerName: string, total: number, pdfUrl: string): string => {
-  // Format message with proper line breaks and https:// prefix for clickable link
-  return `Hello ${customerName},\nYour bill of ₹${total} is ready.\nDownload here:\nhttps://${pdfUrl.replace(/^https?:\/\//, '')}`;
+  // Ensure URL has https:// prefix for clickable link
+  const formattedUrl = pdfUrl.startsWith('http') ? pdfUrl : `https://${pdfUrl}`;
+  
+  // Create message with exact structure for clickable links
+  return `Hello ${customerName},
+Your bill of ₹${total} is ready.
+Download here:
+${formattedUrl}`;
 };
 
 export const openWhatsAppShare = (phone: string, message: string): void => {
-  const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const encodedMessage = encodeURIComponent(message);
+  const waUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
   window.open(waUrl, '_blank');
 };
 
