@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
@@ -157,10 +158,16 @@ const Billing = () => {
       if (!pdfBlob) throw new Error('PDF generation failed');
       const pdfUrl = await uploadPDFToSupabase(pdfBlob, fileName);
       console.log('Supabase PDF URL:', pdfUrl);
+      
+      // Clean phone number: remove leading zeros and ensure it starts with 91
       let phone = customerInfo.phone.replace(/^0+/, '');
       if (!phone.startsWith('91')) phone = '91' + phone;
+      
       const total = calculateGrandTotal();
-      const message = `Hello ${customerInfo.name},\nYour bill of ₹${total} is ready.\nDownload: ${pdfUrl}`;
+      
+      // Format message with proper line breaks and https:// prefix for clickable link
+      const message = `Hello ${customerInfo.name},\nYour bill of ₹${total} is ready.\nDownload here:\nhttps://${pdfUrl.replace(/^https?:\/\//, '')}`;
+      
       const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
     } catch (err) {
