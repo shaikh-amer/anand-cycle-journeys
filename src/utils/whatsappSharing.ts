@@ -1,3 +1,4 @@
+
 import { CustomerInfo } from '@/types/billing';
 
 export const formatPhoneNumber = (phone: string): string => {
@@ -19,17 +20,11 @@ export const createWhatsAppMessage = (customerName: string, total: number, pdfUr
     formattedUrl = `https://${formattedUrl}`;
   }
   
-  // WhatsApp link detection works better with this format:
-  // - Keep URL on its own line
-  // - Add space before and after URL
-  // - Use simple, clean message structure
-  return `Hello ${customerName},
-
-Your bill of ₹${total} is ready.
-
-Download: ${formattedUrl}
-
-Thank you!`;
+  // For unsaved contacts, try this format which works better:
+  // - Use shorter text
+  // - Put URL at the end 
+  // - Use simple formatting
+  return `Hi ${customerName}! Your invoice of ₹${total} is ready. Download: ${formattedUrl}`;
 };
 
 export const openWhatsAppShare = (phone: string, message: string): void => {
