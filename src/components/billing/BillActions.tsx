@@ -5,6 +5,8 @@ import { Receipt, Share, Printer, Upload, Link } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import InstallAppButton from '@/components/InstallAppButton';
 import { generatePDFFile, shareViaNativeShare, isWebShareSupported, uploadToCloudinary } from '@/utils/pdfSharing';
+import { shareOnWhatsApp } from '@/utils/whatsappSharing';
+import { CustomerInfo } from '@/types/billing';
 
 interface BillActionsProps {
   generateBill: () => void;
@@ -12,25 +14,71 @@ interface BillActionsProps {
   printBill: () => void;
   isUploading: boolean;
   billPreviewRef: React.RefObject<HTMLDivElement>;
-  customerName: string;
+  customerInfo: CustomerInfo;
   total: number;
 }
 
 const BillActions = ({ 
   generateBill, 
-  shareOnWhatsApp, 
+  shareOnWhatsApp: originalShareOnWhatsApp, 
   printBill, 
   isUploading,
   billPreviewRef,
-  customerName,
+  customerInfo,
   total
 }: BillActionsProps) => {
   const [isSharing, setIsSharing] = useState(false);
   const [isUploadingToCloud, setIsUploadingToCloud] = useState(false);
   const { toast } = useToast();
 
+  const handleWhatsAppShare = async () => {
+    if (!customerInfo.name || !customerInfo.phone) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in customer name and phone number",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!billPreviewRef.current) {
+      toast({
+        title: "Missing Information",
+        description: "Please generate the bill first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSharing(true);
+    try {
+      const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
+      const pdfFile = await generatePDFFile(billPreviewRef.current, fileName);
+      
+      // Create a temporary URL for the PDF
+      const pdfUrl = URL.createObjectURL(pdfFile);
+      
+      // Use the whatsappSharing utility with customer info
+      await shareOnWhatsApp(customerInfo, total, pdfUrl);
+      
+      toast({
+        title: "Opening WhatsApp",
+        description: `Opening WhatsApp chat with ${customerInfo.name}`
+      });
+    } catch (error) {
+      console.error('WhatsApp share failed:', error);
+      toast({
+        title: "Share Failed",
+        description: (error as Error).message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
   const handleDirectPDFShare = async () => {
-    if (!billPreviewRef.current || !customerName) {
+    if (!billPreviewRef.current || !customerInfo.name) {
       toast({
         title: "Missing Information",
         description: "Please fill in customer details before sharing",
@@ -41,10 +89,10 @@ const BillActions = ({
 
     setIsSharing(true);
     try {
-      const fileName = `Invoice_${customerName.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
+      const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
       const pdfFile = await generatePDFFile(billPreviewRef.current, fileName);
       
-      const success = await shareViaNativeShare(pdfFile, customerName, total);
+      const success = await shareViaNativeShare(pdfFile, customerInfo.name, total);
       if (success) {
         toast({
           title: "PDF Shared Successfully!",
@@ -64,7 +112,7 @@ const BillActions = ({
   };
 
   const handleCloudinaryUpload = async () => {
-    if (!billPreviewRef.current || !customerName) {
+    if (!billPreviewRef.current || !customerInfo.name) {
       toast({
         title: "Missing Information",
         description: "Please fill in customer details before uploading",
@@ -75,7 +123,7 @@ const BillActions = ({
 
     setIsUploadingToCloud(true);
     try {
-      const fileName = `Invoice_${customerName.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
+      const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
       const pdfFile = await generatePDFFile(billPreviewRef.current, fileName);
       
       const cloudinaryUrl = await uploadToCloudinary(pdfFile);
@@ -117,12 +165,12 @@ const BillActions = ({
         </Button>
       ) : (
         <Button 
-          onClick={shareOnWhatsApp} 
+          onClick={handleWhatsAppShare} 
           className="btn-secondary" 
-          disabled={isUploading}
+          disabled={isSharing || isUploading}
         >
           <Share className="w-4 h-4 mr-2" />
-          {isUploading ? 'Uploading...' : 'Share on WhatsApp'}
+          {isSharing ? 'Opening WhatsApp...' : 'Share on WhatsApp'}
         </Button>
       )}
       

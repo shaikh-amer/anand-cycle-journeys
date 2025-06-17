@@ -11,6 +11,7 @@ import BillPreview from '@/components/billing/BillPreview';
 import RecentBills from '@/components/billing/RecentBills';
 import { CustomerInfo } from '@/types/billing';
 import { useBillItems } from '@/hooks/useBillItems';
+import { useBills } from '@/hooks/useBills';
 import { 
   calculateSubtotal, 
   calculateGST, 
@@ -23,12 +24,12 @@ import {
   downloadPDF, 
   printPDF 
 } from '@/utils/pdfGenerator';
-import { shareOnWhatsApp } from '@/utils/whatsappSharing';
 
 const Billing = () => {
   const { toast } = useToast();
   const { logout } = useAuth();
   const { billItems, addItem, removeItem, updateItem } = useBillItems();
+  const { saveBill } = useBills();
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     phone: '',
@@ -61,17 +62,30 @@ const Billing = () => {
     }
 
     const billNo = generateBillNumber();
-    toast({
-      title: "Bill Generated Successfully!",
-      description: "Bill #" + billNo + " has been created"
-    });
-
+    
     try {
+      // Save bill to database
+      await saveBill(
+        customerInfo,
+        billItems,
+        calculateTotal(),
+        calculateGSTAmount(),
+        calculateGrandTotalAmount(),
+        includeGST,
+        billNo
+      );
+
+      toast({
+        title: "Bill Generated Successfully!",
+        description: "Bill #" + billNo + " has been created and saved"
+      });
+
+      // Generate PDF
       await handleGeneratePDF(false);
     } catch (err) {
-      console.error('PDF generation failed:', err);
+      console.error('Bill generation failed:', err);
       toast({
-        title: "PDF Generation Failed",
+        title: "Bill Generation Failed",
         description: (err as Error).message || String(err),
         variant: "destructive"
       });
@@ -101,8 +115,7 @@ const Billing = () => {
       const pdfUrl = await uploadPDFToSupabase(pdfBlob, fileName);
       console.log('Supabase PDF URL:', pdfUrl);
       
-      const total = calculateGrandTotalAmount();
-      await shareOnWhatsApp(customerInfo, total, pdfUrl);
+      // This will be handled by BillActions component now
     } catch (err) {
       toast({ 
         title: 'WhatsApp Share Failed', 
@@ -166,7 +179,7 @@ const Billing = () => {
               printBill={() => handleGeneratePDF(true)}
               isUploading={isUploading}
               billPreviewRef={billPreviewRef}
-              customerName={customerInfo.name}
+              customerInfo={customerInfo}
               total={calculateGrandTotalAmount()}
             />
           </div>
