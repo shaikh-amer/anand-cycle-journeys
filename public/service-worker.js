@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'anand-cycle-bills-v1';
+const CACHE_NAME = 'anand-cycle-bills-v2';
 const urlsToCache = [
   '/',
   '/billing',
@@ -11,6 +11,7 @@ const urlsToCache = [
 
 // Install event - cache resources
 self.addEventListener('install', (event) => {
+  console.log('Service Worker installing...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -21,6 +22,8 @@ self.addEventListener('install', (event) => {
         console.log('Cache install failed:', error);
       })
   );
+  // Force the waiting service worker to become the active service worker
+  self.skipWaiting();
 });
 
 // Fetch event - serve from cache when offline
@@ -34,11 +37,18 @@ self.addEventListener('fetch', (event) => {
         }
         return fetch(event.request);
       })
+      .catch(() => {
+        // If both cache and network fail, return a fallback page
+        if (event.request.destination === 'document') {
+          return caches.match('/');
+        }
+      })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating...');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -49,6 +59,16 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
+    }).then(() => {
+      // Take control of all pages immediately
+      return self.clients.claim();
     })
   );
+});
+
+// Listen for messages from the main thread
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
