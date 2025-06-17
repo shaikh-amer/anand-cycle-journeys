@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'anand-cycle-bills-v2';
+const CACHE_NAME = 'anand-cycle-bills-v3';
 const urlsToCache = [
   '/',
   '/billing',
@@ -16,7 +16,10 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        return cache.addAll(urlsToCache).catch((error) => {
+          console.log('Cache add failed for some resources:', error);
+          // Continue even if some resources fail to cache
+        });
       })
       .catch((error) => {
         console.log('Cache install failed:', error);

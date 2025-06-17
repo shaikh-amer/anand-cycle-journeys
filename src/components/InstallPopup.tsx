@@ -35,16 +35,16 @@ const InstallPopup = () => {
 
   const handleDismiss = () => {
     dismissInstallPrompt();
-    // Don't show again for 24 hours
+    // Don't show again for 2 hours instead of 24
     localStorage.setItem('installPromptDismissed', Date.now().toString());
   };
 
-  // Check if user dismissed popup recently
+  // Check if user dismissed popup recently (reduced to 2 hours for testing)
   const lastDismissed = localStorage.getItem('installPromptDismissed');
   if (lastDismissed) {
     const dismissedTime = parseInt(lastDismissed);
     const hoursSinceDismissed = (Date.now() - dismissedTime) / (1000 * 60 * 60);
-    if (hoursSinceDismissed < 24) {
+    if (hoursSinceDismissed < 2) {
       return null;
     }
   }
@@ -96,6 +96,10 @@ const InstallPopup = () => {
               Later
             </Button>
           </div>
+          
+          <p className="text-xs text-muted-foreground text-center">
+            For Chrome: Look for "Install app" in the address bar or menu
+          </p>
         </CardContent>
       </Card>
     </div>
