@@ -165,6 +165,9 @@ const Billing = () => {
               shareOnWhatsApp={handleShareOnWhatsApp}
               printBill={() => handleGeneratePDF(true)}
               isUploading={isUploading}
+              billPreviewRef={billPreviewRef}
+              customerName={customerInfo.name}
+              total={calculateGrandTotalAmount()}
             />
           </div>
 

@@ -10,6 +10,21 @@
     <meta name="author" content="Anand Cycle Store" />
     <meta name="keywords" content="bicycle store, bikes Nanded, cycle shop, Hero bikes, mountain bikes, kids cycles, bike repair, wholesale cycles" />
 
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#7c2d12" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Anand Cycle Store" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
+
     <meta property="og:title" content="Anand Cycle Store - Quality Bikes in Nanded" />
     <meta property="og:description" content="Your trusted cycling partner since 1995. Quality bikes, expert service, and a passion for helping you discover the joy of cycling." />
     <meta property="og:type" content="website" />
@@ -18,12 +33,6 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@anandcyclestore" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#7c2d12" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Anand Cycle Store" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,5 +43,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
