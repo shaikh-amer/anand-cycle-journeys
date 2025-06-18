@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import InstallAppButton from '@/components/InstallAppButton';
 import { generatePDFFile, shareViaNativeShare, isWebShareSupported, uploadToCloudinary } from '@/utils/pdfSharing';
 import { shareOnWhatsApp } from '@/utils/whatsappSharing';
+import { generatePDFBlob, uploadPDFToSupabase } from '@/utils/pdfGenerator';
 import { CustomerInfo } from '@/types/billing';
 
 interface BillActionsProps {
@@ -77,14 +78,30 @@ const BillActions = ({
       return;
     }
 
+    if (!billPreviewRef.current) {
+      toast({
+        title: "Error",
+        description: "Bill preview not available",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSharing(true);
     try {
-      // Use the shareOnWhatsApp utility function with customerInfo and total
-      await shareOnWhatsApp(customerInfo, total, '');
+      // Generate PDF first
+      const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
+      const pdfBlob = await generatePDFBlob(billPreviewRef.current, fileName);
+      
+      // Upload to Supabase to get a shareable link
+      const pdfUrl = await uploadPDFToSupabase(pdfBlob, fileName);
+      
+      // Share via WhatsApp with the PDF link
+      await shareOnWhatsApp(customerInfo, total, pdfUrl);
       
       toast({
         title: "WhatsApp Opened!",
-        description: "Customer details and amount have been prepared for sharing"
+        description: "PDF uploaded and WhatsApp opened with customer details"
       });
     } catch (error) {
       console.error('WhatsApp share failed:', error);
