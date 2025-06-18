@@ -67,7 +67,7 @@ const BillActions = ({
     }
   };
 
-  const handleSharePDF = async () => {
+  const handleWhatsAppShare = async () => {
     if (!customerInfo.name || !customerInfo.phone) {
       toast({
         title: "Missing Information",
@@ -77,8 +77,25 @@ const BillActions = ({
       return;
     }
 
-    // Use the shareOnWhatsApp utility function with customerInfo and total
-    await shareOnWhatsApp(customerInfo, total, '');
+    setIsSharing(true);
+    try {
+      // Use the shareOnWhatsApp utility function with customerInfo and total
+      await shareOnWhatsApp(customerInfo, total, '');
+      
+      toast({
+        title: "WhatsApp Opened!",
+        description: "Customer details and amount have been prepared for sharing"
+      });
+    } catch (error) {
+      console.error('WhatsApp share failed:', error);
+      toast({
+        title: "Share Failed",
+        description: (error as Error).message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsSharing(false);
+    }
   };
 
   const handleCloudinaryUpload = async () => {
@@ -135,12 +152,12 @@ const BillActions = ({
         </Button>
       ) : (
         <Button 
-          onClick={handleSharePDF} 
+          onClick={handleWhatsAppShare} 
           className="btn-secondary" 
-          disabled={isUploading}
+          disabled={isSharing}
         >
           <Share className="w-4 h-4 mr-2" />
-          Share on WhatsApp
+          {isSharing ? 'Sharing...' : 'Share on WhatsApp'}
         </Button>
       )}
       
