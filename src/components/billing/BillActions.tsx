@@ -5,7 +5,7 @@ import { Receipt, Share, Printer, Upload, Link } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import InstallAppButton from '@/components/InstallAppButton';
 import { generatePDFFile, shareViaNativeShare, isWebShareSupported, uploadToCloudinary } from '@/utils/pdfSharing';
-import { shareOnWhatsApp } from '@/utils/whatsappSharing';
+import { shareOnWhatsApp, formatPhoneNumber } from '@/utils/whatsappSharing';
 import { generatePDFBlob, uploadPDFToSupabase } from '@/utils/pdfGenerator';
 import { CustomerInfo } from '@/types/billing';
 
@@ -35,10 +35,10 @@ const BillActions = ({
   const { toast } = useToast();
 
   const handleDirectPDFShare = async () => {
-    if (!billPreviewRef.current || !customerName) {
+    if (!billPreviewRef.current || !customerInfo.name || !customerInfo.phone) {
       toast({
         title: "Missing Information",
-        description: "Please fill in customer details before sharing",
+        description: "Please fill in customer name and phone number before sharing",
         variant: "destructive"
       });
       return;
@@ -46,16 +46,48 @@ const BillActions = ({
 
     setIsSharing(true);
     try {
-      const fileName = `Invoice_${customerName.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
+      const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
       const pdfFile = await generatePDFFile(billPreviewRef.current, fileName);
       
-      const success = await shareViaNativeShare(pdfFile, customerName, total);
-      if (success) {
-        toast({
-          title: "PDF Shared Successfully!",
-          description: "Invoice has been shared via your chosen app"
-        });
+      // First try native share with PDF file
+      if (isWebShareSupported()) {
+        const shareData = {
+          title: `Invoice for ${customerInfo.name}`,
+          text: `Hi ${customerInfo.name}! Your invoice of ₹${total} is ready.`,
+          files: [pdfFile]
+        };
+
+        if (navigator.canShare && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+          toast({
+            title: "PDF Shared Successfully!",
+            description: "Invoice has been shared"
+          });
+          return;
+        }
       }
+
+      // Fallback: Open WhatsApp with customer number and message
+      const phone = formatPhoneNumber(customerInfo.phone);
+      const message = encodeURIComponent(`Hi ${customerInfo.name}! Your invoice of ₹${total} is ready. I'm sharing the PDF with you.`);
+      const waUrl = `https://wa.me/${phone}?text=${message}`;
+      
+      // Create a download link for the PDF
+      const url = URL.createObjectURL(pdfFile);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = fileName;
+      downloadLink.click();
+      URL.revokeObjectURL(url);
+      
+      // Open WhatsApp
+      window.open(waUrl, '_blank');
+      
+      toast({
+        title: "PDF Downloaded & WhatsApp Opened!",
+        description: "PDF has been downloaded and WhatsApp opened with customer details"
+      });
+      
     } catch (error) {
       console.error('Direct share failed:', error);
       toast({
@@ -158,25 +190,14 @@ const BillActions = ({
         Generate Bill
       </Button>
       
-      {isWebShareSupported() ? (
-        <Button 
-          onClick={handleDirectPDFShare} 
-          className="btn-secondary" 
-          disabled={isSharing}
-        >
-          <Share className="w-4 h-4 mr-2" />
-          {isSharing ? 'Sharing...' : 'Share PDF'}
-        </Button>
-      ) : (
-        <Button 
-          onClick={handleWhatsAppShare} 
-          className="btn-secondary" 
-          disabled={isSharing}
-        >
-          <Share className="w-4 h-4 mr-2" />
-          {isSharing ? 'Sharing...' : 'Share on WhatsApp'}
-        </Button>
-      )}
+      <Button 
+        onClick={handleDirectPDFShare} 
+        className="btn-secondary" 
+        disabled={isSharing}
+      >
+        <Share className="w-4 h-4 mr-2" />
+        {isSharing ? 'Sharing...' : 'Share PDF'}
+      </Button>
       
       <Button variant="outline" onClick={printBill}>
         <Printer className="w-4 h-4 mr-2" />
