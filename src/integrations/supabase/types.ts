@@ -9,6 +9,86 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bill_items: {
+        Row: {
+          amount: number
+          bill_id: string
+          created_at: string
+          id: string
+          item_name: string
+          quantity: number
+          rate: number
+        }
+        Insert: {
+          amount: number
+          bill_id: string
+          created_at?: string
+          id?: string
+          item_name: string
+          quantity: number
+          rate: number
+        }
+        Update: {
+          amount?: number
+          bill_id?: string
+          created_at?: string
+          id?: string
+          item_name?: string
+          quantity?: number
+          rate?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bill_items_bill_id_fkey"
+            columns: ["bill_id"]
+            isOneToOne: false
+            referencedRelation: "bills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bills: {
+        Row: {
+          bill_number: string
+          created_at: string
+          customer_address: string | null
+          customer_name: string
+          customer_phone: string
+          gst_amount: number
+          id: string
+          include_gst: boolean
+          subtotal: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          bill_number: string
+          created_at?: string
+          customer_address?: string | null
+          customer_name: string
+          customer_phone: string
+          gst_amount?: number
+          id?: string
+          include_gst?: boolean
+          subtotal: number
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          bill_number?: string
+          created_at?: string
+          customer_address?: string | null
+          customer_name?: string
+          customer_phone?: string
+          gst_amount?: number
+          id?: string
+          include_gst?: boolean
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string

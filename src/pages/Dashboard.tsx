@@ -4,30 +4,53 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, DollarSign, ShoppingCart, Users, Calendar, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useBills } from '@/hooks/useBills';
+import { format } from 'date-fns';
 
 const Dashboard = () => {
+  const { bills, isLoading } = useBills();
+
+  if (isLoading) {
+    return (
+      <div className="py-8">
+        <div className="container mx-auto px-4">
+          <div className="text-center">Loading dashboard...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate today's stats
+  const today = new Date();
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  
+  const todayBills = bills.filter(bill => new Date(bill.created_at) >= todayStart);
   const todayStats = {
-    sales: 45600,
-    orders: 12,
-    customers: 8,
-    avgOrderValue: 3800
+    sales: todayBills.reduce((sum, bill) => sum + bill.total_amount, 0),
+    orders: todayBills.length,
+    customers: new Set(todayBills.map(bill => bill.customer_name)).size,
+    avgOrderValue: todayBills.length > 0 ? todayBills.reduce((sum, bill) => sum + bill.total_amount, 0) / todayBills.length : 0
   };
 
+  // Calculate monthly stats
+  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const monthBills = bills.filter(bill => new Date(bill.created_at) >= monthStart);
   const monthlyStats = {
-    sales: 1240000,
-    orders: 340,
-    customers: 180,
-    growth: 15.2
+    sales: monthBills.reduce((sum, bill) => sum + bill.total_amount, 0),
+    orders: monthBills.length,
+    customers: new Set(monthBills.map(bill => bill.customer_name)).size,
+    growth: 15.2 // This would need historical data to calculate properly
   };
 
-  const recentSales = [
-    { id: '#001234', customer: 'Rahul Sharma', amount: 15600, items: 'Hero Sprint Pro', time: '2:30 PM' },
-    { id: '#001233', customer: 'Priya Patel', amount: 8400, items: 'Kids Bike + Helmet', time: '1:45 PM' },
-    { id: '#001232', customer: 'Amit Kumar', amount: 22500, items: 'Hero Octane MTB', time: '12:20 PM' },
-    { id: '#001231', customer: 'Sneha Desai', amount: 4200, items: 'Accessories Set', time: '11:15 AM' },
-    { id: '#001230', customer: 'Vijay Singh', amount: 18900, items: 'Hero Kyoto Hybrid', time: '10:30 AM' }
-  ];
+  const recentSales = bills.slice(0, 5).map(bill => ({
+    id: `#${bill.bill_number}`,
+    customer: bill.customer_name,
+    amount: bill.total_amount,
+    items: 'Items from bill', // You could fetch bill items if needed
+    time: format(new Date(bill.created_at), 'h:mm a')
+  }));
 
+  // Calculate top products (this would need bill items data)
   const topProducts = [
     { name: 'Hero Sprint Pro', sales: 8, revenue: 224000 },
     { name: 'Kids Safety Set', sales: 15, revenue: 45000 },
@@ -65,7 +88,7 @@ const Dashboard = () => {
               <div className="text-2xl font-bold text-primary">₹{todayStats.sales.toLocaleString()}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                 <TrendingUp className="h-3 w-3 text-green-600" />
-                <span className="text-green-600">+12% from yesterday</span>
+                <span className="text-green-600">Real-time data</span>
               </div>
             </CardContent>
           </Card>
@@ -79,7 +102,7 @@ const Dashboard = () => {
               <div className="text-2xl font-bold text-primary">{todayStats.orders}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                 <TrendingUp className="h-3 w-3 text-green-600" />
-                <span className="text-green-600">+3 from yesterday</span>
+                <span className="text-green-600">Real-time data</span>
               </div>
             </CardContent>
           </Card>
@@ -93,7 +116,7 @@ const Dashboard = () => {
               <div className="text-2xl font-bold text-primary">{todayStats.customers}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                 <TrendingUp className="h-3 w-3 text-green-600" />
-                <span className="text-green-600">+2 from yesterday</span>
+                <span className="text-green-600">Real-time data</span>
               </div>
             </CardContent>
           </Card>
@@ -104,10 +127,10 @@ const Dashboard = () => {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary">₹{todayStats.avgOrderValue.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-primary">₹{Math.round(todayStats.avgOrderValue).toLocaleString()}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                <TrendingDown className="h-3 w-3 text-red-600" />
-                <span className="text-red-600">-5% from yesterday</span>
+                <TrendingUp className="h-3 w-3 text-green-600" />
+                <span className="text-green-600">Real-time data</span>
               </div>
             </CardContent>
           </Card>
@@ -125,17 +148,17 @@ const Dashboard = () => {
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">₹{monthlyStats.sales.toLocaleString()}</div>
                   <div className="text-sm text-muted-foreground">Total Sales</div>
-                  <Badge className="mt-2 bg-green-100 text-green-800">+{monthlyStats.growth}% growth</Badge>
+                  <Badge className="mt-2 bg-green-100 text-green-800">Real data</Badge>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">{monthlyStats.orders}</div>
                   <div className="text-sm text-muted-foreground">Total Orders</div>
-                  <div className="text-xs text-muted-foreground mt-2">Avg: 11 orders/day</div>
+                  <div className="text-xs text-muted-foreground mt-2">From database</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">{monthlyStats.customers}</div>
                   <div className="text-sm text-muted-foreground">Customers Served</div>
-                  <div className="text-xs text-muted-foreground mt-2">45% repeat customers</div>
+                  <div className="text-xs text-muted-foreground mt-2">Unique customers</div>
                 </div>
               </div>
             </CardContent>
@@ -166,24 +189,30 @@ const Dashboard = () => {
         <Card className="border-0 shadow-md">
           <CardHeader>
             <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>Latest transactions from today</CardDescription>
+            <CardDescription>Latest transactions from the database</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentSales.map((sale) => (
-                <div key={sale.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
-                  <div className="flex-1">
-                    <div className="font-semibold">{sale.customer}</div>
-                    <div className="text-sm text-muted-foreground">{sale.items}</div>
-                    <div className="text-xs text-muted-foreground">{sale.id} • {sale.time}</div>
+            {recentSales.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No sales data available. Start creating bills to see them here!
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {recentSales.map((sale) => (
+                  <div key={sale.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+                    <div className="flex-1">
+                      <div className="font-semibold">{sale.customer}</div>
+                      <div className="text-sm text-muted-foreground">{sale.items}</div>
+                      <div className="text-xs text-muted-foreground">{sale.id} • {sale.time}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-lg text-primary">₹{sale.amount.toLocaleString()}</div>
+                      <Badge variant="outline">Completed</Badge>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-bold text-lg text-primary">₹{sale.amount.toLocaleString()}</div>
-                    <Badge variant="outline">Completed</Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

@@ -11,6 +11,7 @@ import BillPreview from '@/components/billing/BillPreview';
 import RecentBills from '@/components/billing/RecentBills';
 import { CustomerInfo } from '@/types/billing';
 import { useBillItems } from '@/hooks/useBillItems';
+import { useBills } from '@/hooks/useBills';
 import { 
   calculateSubtotal, 
   calculateGST, 
@@ -29,6 +30,7 @@ const Billing = () => {
   const { toast } = useToast();
   const { logout } = useAuth();
   const { billItems, addItem, removeItem, updateItem } = useBillItems();
+  const { saveBill } = useBills();
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     phone: '',
@@ -61,17 +63,42 @@ const Billing = () => {
     }
 
     const billNo = generateBillNumber();
-    toast({
-      title: "Bill Generated Successfully!",
-      description: "Bill #" + billNo + " has been created"
-    });
-
+    
     try {
+      // Save bill to database
+      const billData = {
+        bill_number: billNo,
+        customer_name: customerInfo.name,
+        customer_phone: customerInfo.phone,
+        customer_address: customerInfo.address,
+        subtotal: calculateTotal(),
+        gst_amount: calculateGSTAmount(),
+        total_amount: calculateGrandTotalAmount(),
+        include_gst: includeGST
+      };
+
+      const billItemsData = billItems
+        .filter(item => item.name.trim()) // Only include items with names
+        .map(item => ({
+          item_name: item.name,
+          quantity: item.quantity,
+          rate: item.rate,
+          amount: item.amount
+        }));
+
+      await saveBill(billData, billItemsData);
+
+      toast({
+        title: "Bill Generated Successfully!",
+        description: "Bill #" + billNo + " has been created and saved"
+      });
+
+      // Generate PDF
       await handleGeneratePDF(false);
     } catch (err) {
-      console.error('PDF generation failed:', err);
+      console.error('Bill generation failed:', err);
       toast({
-        title: "PDF Generation Failed",
+        title: "Bill Generation Failed",
         description: (err as Error).message || String(err),
         variant: "destructive"
       });
@@ -168,6 +195,7 @@ const Billing = () => {
               billPreviewRef={billPreviewRef}
               customerName={customerInfo.name}
               total={calculateGrandTotalAmount()}
+              customerInfo={customerInfo}
             />
           </div>
 

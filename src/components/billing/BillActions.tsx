@@ -5,6 +5,8 @@ import { Receipt, Share, Printer, Upload, Link } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import InstallAppButton from '@/components/InstallAppButton';
 import { generatePDFFile, shareViaNativeShare, isWebShareSupported, uploadToCloudinary } from '@/utils/pdfSharing';
+import { shareOnWhatsApp } from '@/utils/whatsappSharing';
+import { CustomerInfo } from '@/types/billing';
 
 interface BillActionsProps {
   generateBill: () => void;
@@ -14,16 +16,18 @@ interface BillActionsProps {
   billPreviewRef: React.RefObject<HTMLDivElement>;
   customerName: string;
   total: number;
+  customerInfo: CustomerInfo;
 }
 
 const BillActions = ({ 
   generateBill, 
-  shareOnWhatsApp, 
+  shareOnWhatsApp: originalShareOnWhatsApp, 
   printBill, 
   isUploading,
   billPreviewRef,
   customerName,
-  total
+  total,
+  customerInfo
 }: BillActionsProps) => {
   const [isSharing, setIsSharing] = useState(false);
   const [isUploadingToCloud, setIsUploadingToCloud] = useState(false);
@@ -61,6 +65,20 @@ const BillActions = ({
     } finally {
       setIsSharing(false);
     }
+  };
+
+  const handleSharePDF = async () => {
+    if (!customerInfo.name || !customerInfo.phone) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in customer name and phone number",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Use the shareOnWhatsApp utility function with customerInfo and total
+    await shareOnWhatsApp(customerInfo, total, '');
   };
 
   const handleCloudinaryUpload = async () => {
@@ -117,12 +135,12 @@ const BillActions = ({
         </Button>
       ) : (
         <Button 
-          onClick={shareOnWhatsApp} 
+          onClick={handleSharePDF} 
           className="btn-secondary" 
           disabled={isUploading}
         >
           <Share className="w-4 h-4 mr-2" />
-          {isUploading ? 'Uploading...' : 'Share on WhatsApp'}
+          Share on WhatsApp
         </Button>
       )}
       
