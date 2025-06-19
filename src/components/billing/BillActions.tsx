@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Receipt, Share, Printer, Upload, Link } from 'lucide-react';
@@ -49,38 +48,47 @@ const BillActions = ({
       const fileName = `Invoice_${customerInfo.name.replace(/\s+/g, '_')}_${Date.now().toString().slice(-6)}.pdf`;
       const pdfFile = await generatePDFFile(billPreviewRef.current, fileName);
       
-      // First try native share with PDF file
-      if (isWebShareSupported()) {
-        const shareData = {
-          title: `Invoice for ${customerInfo.name}`,
-          text: `Hi ${customerInfo.name}! Your invoice of ₹${total} is ready.`,
-          files: [pdfFile]
-        };
+      // Check if we can use Web Share API with files
+      const shareData = {
+        title: `Invoice for ${customerInfo.name}`,
+        text: `Hi ${customerInfo.name}! Your invoice of ₹${total} is ready.`,
+        files: [pdfFile]
+      };
 
-        if (navigator.canShare && navigator.canShare(shareData)) {
+      // Try native share first (works best on mobile)
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        try {
           await navigator.share(shareData);
           toast({
             title: "PDF Shared Successfully!",
-            description: "Invoice has been shared"
+            description: "Invoice has been shared via WhatsApp"
           });
           return;
+        } catch (shareError: any) {
+          // User cancelled or share failed, continue to fallback
+          if (shareError.name !== 'AbortError') {
+            console.log('Native share failed, using fallback:', shareError);
+          }
         }
       }
 
-      // Fallback: Open WhatsApp with customer number and message
+      // Fallback for desktop or when native share is not available
       const phone = formatPhoneNumber(customerInfo.phone);
-      const message = encodeURIComponent(`Hi ${customerInfo.name}! Your invoice of ₹${total} is ready. I'm sharing the PDF with you.`);
-      const waUrl = `https://wa.me/${phone}?text=${message}`;
+      const message = `Hi ${customerInfo.name}! Your invoice of ₹${total} is ready. I'm sharing the PDF with you.`;
       
-      // Create a download link for the PDF
+      // Download the PDF file
       const url = URL.createObjectURL(pdfFile);
       const downloadLink = document.createElement('a');
       downloadLink.href = url;
       downloadLink.download = fileName;
+      document.body.appendChild(downloadLink);
       downloadLink.click();
+      document.body.removeChild(downloadLink);
       URL.revokeObjectURL(url);
       
-      // Open WhatsApp
+      // Open WhatsApp with customer number
+      const encodedMessage = encodeURIComponent(message);
+      const waUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
       window.open(waUrl, '_blank');
       
       toast({
@@ -89,7 +97,7 @@ const BillActions = ({
       });
       
     } catch (error) {
-      console.error('Direct share failed:', error);
+      console.error('PDF share failed:', error);
       toast({
         title: "Share Failed",
         description: (error as Error).message,
