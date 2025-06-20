@@ -2,8 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown, DollarSign, ShoppingCart, Users, Calendar, MessageSquare } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { TrendingUp, TrendingDown, DollarSign, ShoppingCart, Users, Calendar } from 'lucide-react';
 import { useBills } from '@/hooks/useBills';
 import { format } from 'date-fns';
 
@@ -67,11 +66,6 @@ const Dashboard = () => {
             <p className="text-muted-foreground">Track your daily and monthly performance</p>
           </div>
           <div className="flex gap-2">
-            <Button asChild>
-              <Link to="/live-chat">
-                <MessageSquare className="mr-2 h-4 w-4" /> Live Chat
-              </Link>
-            </Button>
             <Button variant="outline">Export Data</Button>
             <Button>Generate Report</Button>
           </div>

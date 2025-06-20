@@ -12,10 +12,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Billing from "./pages/Billing";
 import Dashboard from "./pages/Dashboard";
-import LiveChat from "./pages/LiveChat";
-import LiveChatSession from "./pages/LiveChatSession";
 import NotFound from "./pages/NotFound";
-import LiveChatWidget from "@/components/LiveChatWidget";
 import AppLayout from "@/components/AppLayout";
 
 const queryClient = new QueryClient();
@@ -49,29 +46,11 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               />
-              <Route 
-                path="/live-chat" 
-                element={
-                  <ProtectedRoute>
-                    <LiveChat />
-                  </ProtectedRoute>
-                } 
-              />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
             </Route>
-            
-            <Route 
-              path="/live-chat/:id" 
-              element={
-                <ProtectedRoute>
-                  <LiveChatSession />
-                </ProtectedRoute>
-              } 
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-        <LiveChatWidget />
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

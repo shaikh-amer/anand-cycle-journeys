@@ -1,5 +1,6 @@
+
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBasket, Receipt, LayoutDashboard, Info, Phone, MessageSquare } from 'lucide-react';
+import { Home, ShoppingBasket, Receipt, LayoutDashboard, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNav = () => {
@@ -10,7 +11,6 @@ const BottomNav = () => {
     { name: 'Products', path: '/products', icon: ShoppingBasket },
     { name: 'Bill Portal', path: '/billing', icon: Receipt },
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Live Chat', path: '/live-chat', icon: MessageSquare },
     { name: 'Contact', path: '/contact', icon: Phone },
   ];
 
@@ -23,7 +23,6 @@ const BottomNav = () => {
 
   const getDisplayName = (name: string) => {
     if (name === 'Bill Portal') return 'Billing';
-    if (name === 'Live Chat') return 'Chat';
     return name;
   };
 

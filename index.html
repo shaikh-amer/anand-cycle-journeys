@@ -1,62 +1,41 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" type="image/png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anand Cycle Store - Pedal Your Dreams Forward | Quality Bikes in Nanded</title>
-    <meta name="description" content="Trusted bicycle store in Nanded since 1995. Quality bikes for kids, MTB, hybrid cycles. Expert service, wholesale & retail. Visit us at M.G. Road, Nanded." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Anand Cycle Store - Premium Bikes & Accessories</title>
+    <meta name="description" content="Discover premium bicycles and accessories at Anand Cycle Store. Quality bikes for every rider with expert service and competitive prices." />
+    <meta name="keywords" content="bicycles, bikes, cycling, accessories, Hero Cycles, premium bikes, cycle store" />
     <meta name="author" content="Anand Cycle Store" />
-    <meta name="keywords" content="bicycle store, bikes Nanded, cycle shop, Hero bikes, mountain bikes, kids cycles, bike repair, wholesale cycles" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anandcyclestore.com/" />
+    <meta property="og:title" content="Anand Cycle Store - Premium Bikes & Accessories" />
+    <meta property="og:description" content="Discover premium bicycles and accessories at Anand Cycle Store. Quality bikes for every rider with expert service and competitive prices." />
+    <meta property="og:image" content="/placeholder.svg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://anandcyclestore.com/" />
+    <meta property="twitter:title" content="Anand Cycle Store - Premium Bikes & Accessories" />
+    <meta property="twitter:description" content="Discover premium bicycles and accessories at Anand Cycle Store. Quality bikes for every rider with expert service and competitive prices." />
+    <meta property="twitter:image" content="/placeholder.svg" />
 
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#7c2d12" />
+    <meta name="theme-color" content="#8B4513" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Anand Cycle Store" />
-    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="apple-touch-icon" href="/placeholder.svg" />
     
-    <!-- PWA Manifest -->
+    <!-- Manifest -->
     <link rel="manifest" href="/manifest.json" />
-    
-    <!-- Apple Touch Icons -->
-    <link rel="apple-touch-icon" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png" />
-
-    <meta property="og:title" content="Anand Cycle Store - Quality Bikes in Nanded" />
-    <meta property="og:description" content="Your trusted cycling partner since 1995. Quality bikes, expert service, and a passion for helping you discover the joy of cycling." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@anandcyclestore" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
-
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-            .then((registration) => {
-              console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
-            });
-        });
-      }
-    </script>
   </body>
 </html>
