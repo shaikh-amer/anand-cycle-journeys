@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Download, X, Smartphone } from 'lucide-react';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const InstallPopup = () => {
   const { showInstallPrompt, installApp, dismissInstallPrompt } = usePWAInstall();
+  const { isAuthenticated } = useAuth();
   const [isInstalling, setIsInstalling] = useState(false);
   const { toast } = useToast();
 
@@ -38,6 +40,11 @@ const InstallPopup = () => {
     // Don't show again for 2 hours instead of 24
     localStorage.setItem('installPromptDismissed', Date.now().toString());
   };
+
+  // Only show to authenticated admin users
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // Check if user dismissed popup recently (reduced to 2 hours for testing)
   const lastDismissed = localStorage.getItem('installPromptDismissed');
