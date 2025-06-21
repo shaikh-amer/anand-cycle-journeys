@@ -1,15 +1,11 @@
 
-const CACHE_NAME = 'anand-cycle-bills-v3';
+const CACHE_NAME = 'anand-cycle-bills-v4';
 const urlsToCache = [
   '/',
-  '/billing',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json',
-  '/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png'
+  '/manifest.json'
 ];
 
-// Install event - cache resources
+// Install event - cache only essential resources
 self.addEventListener('install', (event) => {
   console.log('Service Worker installing...');
   event.waitUntil(
@@ -29,24 +25,75 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - improved handling to prevent MIME type issues
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        if (response) {
+  const request = event.request;
+  const url = new URL(request.url);
+  
+  // Don't intercept requests for static assets (CSS, JS, images, etc.)
+  if (
+    request.destination === 'style' ||
+    request.destination === 'script' ||
+    request.destination === 'image' ||
+    request.destination === 'font' ||
+    url.pathname.includes('/assets/') ||
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.png') ||
+    url.pathname.endsWith('.jpg') ||
+    url.pathname.endsWith('.jpeg') ||
+    url.pathname.endsWith('.svg') ||
+    url.pathname.endsWith('.ico') ||
+    url.pathname.endsWith('.woff') ||
+    url.pathname.endsWith('.woff2')
+  ) {
+    // Let these requests go directly to network
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // Only handle navigation requests and API calls
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          // If successful, cache and return
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
           return response;
-        }
-        return fetch(event.request);
-      })
-      .catch(() => {
-        // If both cache and network fail, return a fallback page
-        if (event.request.destination === 'document') {
-          return caches.match('/');
-        }
-      })
-  );
+        })
+        .catch(() => {
+          // Only return cached HTML for navigation requests
+          return caches.match('/').then((cachedResponse) => {
+            return cachedResponse || new Response('Offline', {
+              status: 200,
+              headers: { 'Content-Type': 'text/html' }
+            });
+          });
+        })
+    );
+  } else {
+    // For all other requests, try network first, then cache
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(request);
+        })
+    );
+  }
 });
 
 // Activate event - clean up old caches
