@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -236,6 +235,86 @@ const Products = () => {
       image: "/lovable-uploads/19c7b92f-de0e-47ae-bd13-781b7198b8b5.png",
       description: "Bubble-themed kids bike with orange and black design",
       features: ["Multi-size options", "Training wheels", "Front basket", "Bubble design", "Orange accents"]
+    },
+    {
+      id: 29,
+      name: "20\" TEDDY",
+      category: "kids",
+      image: "/lovable-uploads/b62e2fad-4ae7-4dec-b929-776c6eb5e082.png",
+      description: "Pink teddy bear themed bike with training wheels and accessories",
+      features: ["20\" wheels", "Training wheels", "Teddy theme", "Pink design", "Front basket"]
+    },
+    {
+      id: 30,
+      name: "16\" TADDY",
+      category: "kids",
+      image: "/lovable-uploads/2bd851ae-00c2-48fd-92e2-87f0cafbce66.png",
+      description: "Colorful teddy themed bike with red and green accents",
+      features: ["16\" wheels", "Training wheels", "Teddy theme", "Red accents", "Front basket"]
+    },
+    {
+      id: 31,
+      name: "14\" TEDDY",
+      category: "kids",
+      image: "/lovable-uploads/6b1311f1-1de7-4b5b-9612-83ef0e48c253.png",
+      description: "Yellow and orange teddy bear bike for younger kids",
+      features: ["14\" wheels", "Training wheels", "Teddy theme", "Yellow frame", "Orange accents"]
+    },
+    {
+      id: 32,
+      name: "20\" THUNDER SX/DX",
+      category: "mtb",
+      image: "/lovable-uploads/b950a127-363c-4504-bd73-61fd939fa6de.png",
+      description: "Professional mountain bike with red and black design",
+      features: ["20\" wheels", "Thunder series", "Mountain bike", "Red accents", "Professional grade"]
+    },
+    {
+      id: 33,
+      name: "20\" VICTORY",
+      category: "mtb",
+      image: "/lovable-uploads/2105680d-f96b-4107-978a-2c891e99f2da.png",
+      description: "Victory series mountain bike with disc brakes",
+      features: ["20\" wheels", "Victory series", "Disc brakes", "Red accents", "Mountain bike"]
+    },
+    {
+      id: 34,
+      name: "20\" VICTORY IC",
+      category: "mtb",
+      image: "/lovable-uploads/d5e2f9b7-94ce-4178-9df2-59b3c0bea171.png",
+      description: "Victory IC series with rear carrier and turquoise accents",
+      features: ["20\" wheels", "Rear carrier", "Victory IC series", "Turquoise design", "Disc brakes"]
+    },
+    {
+      id: 35,
+      name: "24.300/26.300 VICTORY D/D",
+      category: "mtb",
+      image: "/lovable-uploads/aad36a44-ff0f-422a-b0a1-a8a14a2bc473.png",
+      description: "Victory series with dual disc brakes and turquoise design",
+      features: ["Multi-size options", "Dual disc brakes", "Victory series", "Turquoise accents", "Professional grade"]
+    },
+    {
+      id: 36,
+      name: "24.300/26.300 VICTORY IC D/D",
+      category: "mtb",
+      image: "/lovable-uploads/ae9556b9-19d0-4653-8996-55f4ff91ce8d.png",
+      description: "Victory IC series with dual disc brakes and yellow accents",
+      features: ["Multi-size options", "Dual disc brakes", "Victory IC series", "Yellow accents", "Rear carrier"]
+    },
+    {
+      id: 37,
+      name: "24.300/26.300 BIG BULL D/D",
+      category: "mtb",
+      image: "/lovable-uploads/f996e4f4-c064-4a9e-afb6-de608abac4c2.png",
+      description: "Big Bull series with dual disc brakes and green design",
+      features: ["Multi-size options", "Dual disc brakes", "Big Bull series", "Green frame", "Heavy duty"]
+    },
+    {
+      id: 38,
+      name: "24.2.40 DRAGON DX DD",
+      category: "mtb",
+      image: "/lovable-uploads/cb434e6a-757e-40a8-b887-995f5a3fd436.png",
+      description: "Dragon DX series with full suspension and orange accents",
+      features: ["24\" wheels", "Full suspension", "Dragon DX series", "Orange accents", "Dual disc brakes"]
     }
   ];
 
