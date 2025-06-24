@@ -395,6 +395,86 @@ const Products = () => {
       image: "/lovable-uploads/bf4d67bf-3bfa-47f0-94dc-c8fb37494bcb.png",
       description: "Defender IC series with rear carrier and silver frame",
       features: ["Multi-size options", "Rear carrier", "Defender IC series", "Silver frame", "Mountain bike"]
+    },
+    {
+      id: 49,
+      name: "Hangover 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/417801cf-36fa-4a05-aacf-f36c3eea943e.png",
+      description: "Hangover series mountain bike with 26\" wheels and POPSTAR branding",
+      features: ["26\" wheels", "Mountain bike", "POPSTAR branding", "Hangover series", "Multi-color options"]
+    },
+    {
+      id: 50,
+      name: "Florence IBC 20\"",
+      category: "kids",
+      image: "/lovable-uploads/2b93340c-ae42-4d11-9430-b996f93f6dff.png",
+      description: "Beautiful pink Florence bike with basket and training wheels",
+      features: ["20\" wheels", "Training wheels", "Front basket", "Florence design", "Pink theme"]
+    },
+    {
+      id: 51,
+      name: "Hangover IBC 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/9bec2ce9-6e04-42c7-9fa5-d8e47f8c1bfd.png",
+      description: "Hangover IBC series with rear carrier and blue accents",
+      features: ["26\" wheels", "Rear carrier", "Blue frame", "POPSTAR branding", "Multi-color options"]
+    },
+    {
+      id: 52,
+      name: "Sniper IBC 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/4f5b846f-e7f6-42a7-96a9-1792945abed7.png",
+      description: "Sniper IBC series with rear carrier and sporty design",
+      features: ["26\" wheels", "Rear carrier", "Sniper series", "CAL BURN branding", "Multi-color options"]
+    },
+    {
+      id: 53,
+      name: "Sniper 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/40bf3096-8d8f-4ddc-91be-49a5229a664c.png",
+      description: "Sniper series with red frame and racing design",
+      features: ["26\" wheels", "Racing design", "Red frame", "CAL BURN branding", "Multi-color options"]
+    },
+    {
+      id: 54,
+      name: "Florence DX 20\"",
+      category: "kids",
+      image: "/lovable-uploads/cb1ccaf2-0d84-4d7e-876e-47744eae64a5.png",
+      description: "Florence DX series with purple theme and training wheels",
+      features: ["20\" wheels", "Training wheels", "Purple design", "Florence DX series", "Front basket"]
+    },
+    {
+      id: 55,
+      name: "24,26,27,29 VICTORY",
+      category: "mtb",
+      image: "/lovable-uploads/e847d19f-e80f-4f3a-b4c2-9e2478e5684e.png",
+      description: "Victory series mountain bike with multiple size options",
+      features: ["Multi-size options", "Victory series", "Disc brakes", "Professional grade", "Black frame"]
+    },
+    {
+      id: 56,
+      name: "24,26,27,29 VICTORY",
+      category: "mtb",
+      image: "/lovable-uploads/3599edc3-dd91-40c4-b287-a1f197a9baad.png",
+      description: "Victory series with black frame and turquoise accents",
+      features: ["Multi-size options", "Victory series", "Disc brakes", "Turquoise accents", "Professional grade"]
+    },
+    {
+      id: 57,
+      name: "24,26 BRUTUS",
+      category: "hybrid",
+      image: "/lovable-uploads/a1b99656-9980-46f5-a9d1-29492a6542b0.png",
+      description: "Brutus series with disc brakes and modern design",
+      features: ["24\"/26\" options", "Disc brakes", "Brutus series", "CAL BURN branding", "Modern design"]
+    },
+    {
+      id: 58,
+      name: "24,26 HANGOVER IC",
+      category: "mtb",
+      image: "/lovable-uploads/69dd6b6b-43f8-47c0-9db9-e503689c22c1.png",
+      description: "Hangover IC series with rear carrier and black frame",
+      features: ["24\"/26\" options", "Rear carrier", "Hangover IC series", "Black frame", "POPSTAR branding"]
     }
   ];
 
