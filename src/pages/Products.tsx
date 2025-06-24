@@ -315,6 +315,86 @@ const Products = () => {
       image: "/lovable-uploads/cb434e6a-757e-40a8-b887-995f5a3fd436.png",
       description: "Dragon DX series with full suspension and orange accents",
       features: ["24\" wheels", "Full suspension", "Dragon DX series", "Orange accents", "Dual disc brakes"]
+    },
+    {
+      id: 39,
+      name: "24,26 TUSKER IC",
+      category: "hybrid",
+      image: "/lovable-uploads/0c691c6c-a6d0-4a50-992c-3f4ed6d1dc3e.png",
+      description: "Tusker IC series with rear carrier and sporty design",
+      features: ["24\"/26\" options", "Rear carrier", "Tusker series", "Sporty design", "Cal Burn branding"]
+    },
+    {
+      id: 40,
+      name: "24,26 BENZO",
+      category: "hybrid",
+      image: "/lovable-uploads/748a2f9f-5e30-4626-8c0c-052bc39e57c6.png",
+      description: "Benzo series with modern design and rear carrier",
+      features: ["24\"/26\" options", "Rear carrier", "Benzo series", "Modern design", "Cal Burn branding"]
+    },
+    {
+      id: 41,
+      name: "24,26 GABBRO",
+      category: "hybrid",
+      image: "/lovable-uploads/bd1d4e2f-18a6-4b7b-9846-97997ab69dca.png",
+      description: "Gabbro series with stylish red frame and rear carrier",
+      features: ["24\"/26\" options", "Rear carrier", "Gabbro series", "Red frame design", "Cal Burn branding"]
+    },
+    {
+      id: 42,
+      name: "24,26 GABBRO",
+      category: "hybrid",
+      image: "/lovable-uploads/00187e63-2bae-4506-a10e-80a3ebb2fde2.png",
+      description: "Gabbro series with navy blue frame and rear carrier",
+      features: ["24\"/26\" options", "Rear carrier", "Gabbro series", "Navy blue frame", "Cal Burn branding"]
+    },
+    {
+      id: 43,
+      name: "24,26 HANGOVER IC",
+      category: "mtb",
+      image: "/lovable-uploads/cc2c196e-eed4-4d94-80e9-b7e16dd8e231.png",
+      description: "Hangover IC series mountain bike with rear carrier",
+      features: ["24\"/26\" options", "Rear carrier", "Mountain bike", "Hangover IC series", "All-terrain ready"]
+    },
+    {
+      id: 44,
+      name: "24.2.40 DRAGON SX DD",
+      category: "mtb",
+      image: "/lovable-uploads/5be2f664-e7fe-404c-bb70-a7237edee7e6.png",
+      description: "Dragon SX series with full suspension and green accents",
+      features: ["24\" wheels", "Full suspension", "Dragon SX series", "Green accents", "Dual disc brakes"]
+    },
+    {
+      id: 45,
+      name: "24,26,27,29 VICTORY IC",
+      category: "mtb",
+      image: "/lovable-uploads/71eb53aa-06c7-4284-b744-41ce6959bbee.png",
+      description: "Victory IC series with multiple size options and rear carrier",
+      features: ["Multi-size options", "Rear carrier", "Victory IC series", "Disc brakes", "Mountain bike"]
+    },
+    {
+      id: 46,
+      name: "24,26 THUNDER SX",
+      category: "mtb",
+      image: "/lovable-uploads/b696d641-c325-4985-b927-443fd34f33b0.png",
+      description: "Thunder SX series with full suspension and blue-yellow design",
+      features: ["24\"/26\" options", "Full suspension", "Thunder SX series", "Blue-yellow design", "Cal Burn branding"]
+    },
+    {
+      id: 47,
+      name: "24,26 BRUTUS IC",
+      category: "hybrid",
+      image: "/lovable-uploads/a4da3666-3ce8-4616-9a21-cb89da36094e.png",
+      description: "Brutus IC series with rear carrier and navy design",
+      features: ["24\"/26\" options", "Rear carrier", "Brutus IC series", "Navy design", "Cal Burn branding"]
+    },
+    {
+      id: 48,
+      name: "24.2.40/26.2.40 DEFENDER IC",
+      category: "mtb",
+      image: "/lovable-uploads/bf4d67bf-3bfa-47f0-94dc-c8fb37494bcb.png",
+      description: "Defender IC series with rear carrier and silver frame",
+      features: ["Multi-size options", "Rear carrier", "Defender IC series", "Silver frame", "Mountain bike"]
     }
   ];
 
