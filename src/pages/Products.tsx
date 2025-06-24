@@ -475,6 +475,70 @@ const Products = () => {
       image: "/lovable-uploads/69dd6b6b-43f8-47c0-9db9-e503689c22c1.png",
       description: "Hangover IC series with rear carrier and black frame",
       features: ["24\"/26\" options", "Rear carrier", "Hangover IC series", "Black frame", "POPSTAR branding"]
+    },
+    {
+      id: 59,
+      name: "Mustang IBC FS D/D 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/2d62d629-9e7b-4dde-9230-a60a97671ad9.png",
+      description: "Mustang series with full suspension and dual disc brakes",
+      features: ["26\" wheels", "Full suspension", "Dual disc brakes", "Mustang series", "POPSTAR branding"]
+    },
+    {
+      id: 60,
+      name: "Mustang IBC 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/5078c662-42fa-4097-8457-4fbf373c715c.png",
+      description: "Mustang IBC series with rear carrier and orange accents",
+      features: ["26\" wheels", "Rear carrier", "Orange accents", "Mustang series", "POPSTAR branding"]
+    },
+    {
+      id: 61,
+      name: "Dragon FS D/D 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/45d9b807-f19c-4dc0-ad38-74850a736bab.png",
+      description: "Dragon series with full suspension and green design",
+      features: ["26\" wheels", "Full suspension", "Dual disc brakes", "Dragon series", "Green accents"]
+    },
+    {
+      id: 62,
+      name: "Florence LX 14\"",
+      category: "kids",
+      image: "/lovable-uploads/04ea5c8d-88fc-46fd-8adb-5936f598811b.png",
+      description: "Florence LX series with purple theme and training wheels",
+      features: ["14\" wheels", "Training wheels", "Purple design", "Florence LX series", "POPSTAR branding"]
+    },
+    {
+      id: 63,
+      name: "Dragon DS D/D 26\"",
+      category: "mtb",
+      image: "/lovable-uploads/6e74820f-56b1-4975-ae93-9c71998c7294.png",
+      description: "Dragon DS series with dual disc brakes and orange design",
+      features: ["26\" wheels", "Dual disc brakes", "Orange accents", "Dragon DS series", "Rear carrier"]
+    },
+    {
+      id: 64,
+      name: "Benzo 20\"",
+      category: "kids",
+      image: "/lovable-uploads/fc2c901e-7c0e-4de3-b964-990d7a9cbe7c.png",
+      description: "Benzo series kids bike with training wheels and green design",
+      features: ["20\" wheels", "Training wheels", "Green design", "Benzo series", "POPSTAR branding"]
+    },
+    {
+      id: 65,
+      name: "Benzo 20\"",
+      category: "kids",
+      image: "/lovable-uploads/dafc9186-3bd1-4a97-b025-f8b8b345f59d.png",
+      description: "Benzo series kids bike with training wheels and orange design",
+      features: ["20\" wheels", "Training wheels", "Orange design", "Benzo series", "POPSTAR branding"]
+    },
+    {
+      id: 66,
+      name: "Benzo 14\"",
+      category: "kids",
+      image: "/lovable-uploads/ceee6ef0-76aa-4099-90bb-ce25c0ea9779.png",
+      description: "Benzo series kids bike with training wheels and pink design",
+      features: ["14\" wheels", "Training wheels", "Pink design", "Benzo series", "POPSTAR branding"]
     }
   ];
 
