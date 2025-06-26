@@ -1,12 +1,12 @@
 
 {
   "name": "Anand Cycle Store - Bill Generator",
-  "short_name": "Anand Bills",
+  "short_name": "Anand Cycles",
   "description": "Professional invoice generation for Anand Cycle Store",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#7c2d12",
+  "theme_color": "#ea580c",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
@@ -15,13 +15,13 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png",
+      "src": "/lovable-uploads/2ab66434-489e-418c-816f-b74940e5167a.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png",
+      "src": "/lovable-uploads/2ab66434-489e-418c-816f-b74940e5167a.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -35,7 +35,7 @@
       "url": "/billing",
       "icons": [
         {
-          "src": "/lovable-uploads/2c4f8fc0-c492-4a22-801d-f7d5b703326d.png",
+          "src": "/lovable-uploads/2ab66434-489e-418c-816f-b74940e5167a.png",
           "sizes": "96x96"
         }
       ]
