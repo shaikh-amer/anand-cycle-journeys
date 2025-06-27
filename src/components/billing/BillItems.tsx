@@ -36,12 +36,11 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
                 value={item.name}
                 onChange={(e) => updateItem(item.id, 'name', e.target.value)}
                 className="w-full"
-                style={{ minWidth: 0 }}
               />
             </div>
             
-            {/* Quantity, Rate, Amount, and Remove button */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Quantity and Rate - Side by side */}
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Qty</label>
                 <Input
@@ -50,7 +49,6 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
                   value={item.quantity}
                   onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
                   className="w-full"
-                  style={{ minWidth: 0 }}
                 />
               </div>
               
@@ -62,13 +60,15 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
                   value={item.rate}
                   onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
                   className="w-full"
-                  style={{ minWidth: 0 }}
                 />
               </div>
-              
+            </div>
+
+            {/* Amount and Remove button */}
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
-                <div className="flex items-center h-10 px-3 py-2 bg-muted rounded-md">
+                <div className="flex items-center justify-center h-10 px-3 py-2 bg-muted rounded-md">
                   <span className="font-semibold text-sm">{item.amount}</span>
                 </div>
               </div>

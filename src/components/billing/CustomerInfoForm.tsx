@@ -17,27 +17,23 @@ const CustomerInfoForm = ({ customerInfo, setCustomerInfo }: CustomerInfoFormPro
         <CardDescription>Enter customer details for the invoice</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Name</label>
-            <Input
-              placeholder="Customer Name"
-              value={customerInfo.name}
-              onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-              className="w-full"
-              style={{ minWidth: 0 }}
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Phone Number</label>
-            <Input
-              placeholder="Phone Number"
-              value={customerInfo.phone}
-              onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-              className="w-full"
-              style={{ minWidth: 0 }}
-            />
-          </div>
+        <div>
+          <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Name</label>
+          <Input
+            placeholder="Customer Name"
+            value={customerInfo.name}
+            onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-muted-foreground mb-1 block">Phone Number</label>
+          <Input
+            placeholder="Phone Number"
+            value={customerInfo.phone}
+            onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+            className="w-full"
+          />
         </div>
         <div>
           <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Address</label>
@@ -46,7 +42,6 @@ const CustomerInfoForm = ({ customerInfo, setCustomerInfo }: CustomerInfoFormPro
             value={customerInfo.address}
             onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
             className="w-full resize-none"
-            style={{ minWidth: 0 }}
             rows={3}
           />
         </div>
