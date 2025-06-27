@@ -2,14 +2,12 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit3, Trash2 } from 'lucide-react';
 import WhatsappIcon from '@/components/icons/WhatsappIcon';
 import { useToast } from '@/hooks/use-toast';
+import ProductForm from './ProductForm';
 
 interface Product {
   id: string;
@@ -26,106 +24,70 @@ const ProductManagement = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    image: '',
-    category: '',
-    description: '',
-    features: '',
-    whatsappNumber: '+919393559292'
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const categories = [
-    { value: 'kids', label: 'Kids Bikes' },
-    { value: 'mtb', label: 'Mountain Bikes' },
-    { value: 'hybrid', label: 'Hybrid Bikes' }
-  ];
+  const handleAddProduct = async (productData: Omit<Product, 'id' | 'createdAt'>) => {
+    setIsSubmitting(true);
+    try {
+      const newProduct: Product = {
+        id: Date.now().toString(),
+        ...productData,
+        createdAt: new Date().toISOString()
+      };
 
-  const handleAddProduct = () => {
-    if (!formData.name || !formData.image || !formData.category || !formData.description) {
+      const updatedProducts = [...products, newProduct];
+      setProducts(updatedProducts);
+      
+      // Save to localStorage so it persists and can be accessed by Products page
+      localStorage.setItem('customProducts', JSON.stringify(updatedProducts));
+      
+      setIsAddDialogOpen(false);
+      
+      toast({
+        title: "Success",
+        description: "Product added successfully!",
+      });
+    } catch (error) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields",
+        description: "Failed to add product. Please try again.",
         variant: "destructive"
       });
-      return;
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const newProduct: Product = {
-      id: Date.now().toString(),
-      name: formData.name,
-      image: formData.image,
-      category: formData.category as 'kids' | 'mtb' | 'hybrid',
-      whatsappNumber: formData.whatsappNumber,
-      description: formData.description,
-      features: formData.features.split(',').map(f => f.trim()).filter(f => f),
-      createdAt: new Date().toISOString()
-    };
-
-    const updatedProducts = [...products, newProduct];
-    setProducts(updatedProducts);
-    
-    // Save to localStorage so it persists and can be accessed by Products page
-    localStorage.setItem('customProducts', JSON.stringify(updatedProducts));
-    
-    setFormData({ 
-      name: '', 
-      image: '', 
-      category: '', 
-      description: '', 
-      features: '', 
-      whatsappNumber: '+919393559292' 
-    });
-    setIsAddDialogOpen(false);
-    
-    toast({
-      title: "Success",
-      description: "Product added successfully!",
-    });
   };
 
-  const handleEditProduct = () => {
-    if (!editingProduct || !formData.name || !formData.image || !formData.category || !formData.description) {
+  const handleEditProduct = async (productData: Omit<Product, 'id' | 'createdAt'>) => {
+    if (!editingProduct) return;
+    
+    setIsSubmitting(true);
+    try {
+      const updatedProducts = products.map(p => 
+        p.id === editingProduct.id 
+          ? { ...p, ...productData }
+          : p
+      );
+      
+      setProducts(updatedProducts);
+      localStorage.setItem('customProducts', JSON.stringify(updatedProducts));
+      
+      setEditingProduct(null);
+      
+      toast({
+        title: "Success",
+        description: "Product updated successfully!",
+      });
+    } catch (error) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields",
+        description: "Failed to update product. Please try again.",
         variant: "destructive"
       });
-      return;
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const updatedProducts = products.map(p => 
-      p.id === editingProduct.id 
-        ? { 
-            ...p, 
-            name: formData.name, 
-            image: formData.image, 
-            category: formData.category as 'kids' | 'mtb' | 'hybrid',
-            description: formData.description,
-            features: formData.features.split(',').map(f => f.trim()).filter(f => f),
-            whatsappNumber: formData.whatsappNumber 
-          }
-        : p
-    );
-    
-    setProducts(updatedProducts);
-    localStorage.setItem('customProducts', JSON.stringify(updatedProducts));
-    
-    setEditingProduct(null);
-    setFormData({ 
-      name: '', 
-      image: '', 
-      category: '', 
-      description: '', 
-      features: '', 
-      whatsappNumber: '+919393559292' 
-    });
-    
-    toast({
-      title: "Success",
-      description: "Product updated successfully!",
-    });
   };
 
   const handleDeleteProduct = (id: string) => {
@@ -149,26 +111,12 @@ const ProductManagement = () => {
 
   const openEditDialog = (product: Product) => {
     setEditingProduct(product);
-    setFormData({
-      name: product.name,
-      image: product.image,
-      category: product.category,
-      description: product.description,
-      features: product.features.join(', '),
-      whatsappNumber: product.whatsappNumber
-    });
   };
 
-  const resetForm = () => {
-    setFormData({ 
-      name: '', 
-      image: '', 
-      category: '', 
-      description: '', 
-      features: '', 
-      whatsappNumber: '+919393559292' 
-    });
+  const closeDialog = () => {
+    setIsAddDialogOpen(false);
     setEditingProduct(null);
+    setIsSubmitting(false);
   };
 
   // Load products from localStorage on component mount
@@ -189,8 +137,7 @@ const ProductManagement = () => {
           </div>
           <Dialog open={isAddDialogOpen || !!editingProduct} onOpenChange={(open) => {
             if (!open) {
-              setIsAddDialogOpen(false);
-              resetForm();
+              closeDialog();
             }
           }}>
             <DialogTrigger asChild>
@@ -206,98 +153,12 @@ const ProductManagement = () => {
                   {editingProduct ? 'Update product details below.' : 'Fill in the product details below.'}
                 </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Product Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Enter product name"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="category">Category *</Label>
-                  <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.value} value={category.value}>
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
-                  <Input
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="Enter product description"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="features">Features (comma-separated)</Label>
-                  <Input
-                    id="features"
-                    value={formData.features}
-                    onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                    placeholder="e.g., 26 wheels, Disc brakes, Lightweight"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="image">Image URL *</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="Enter image URL"
-                  />
-                  {formData.image && (
-                    <div className="mt-2">
-                      <img 
-                        src={formData.image} 
-                        alt="Preview" 
-                        className="w-20 h-20 object-cover rounded border"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="whatsapp">WhatsApp Number</Label>
-                  <Input
-                    id="whatsapp"
-                    value={formData.whatsappNumber}
-                    onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
-                    placeholder="+919393559292"
-                  />
-                </div>
-                
-                <div className="flex gap-2 justify-end">
-                  <Button variant="outline" onClick={() => {
-                    setIsAddDialogOpen(false);
-                    resetForm();
-                  }}>
-                    Cancel
-                  </Button>
-                  <Button onClick={editingProduct ? handleEditProduct : handleAddProduct}>
-                    {editingProduct ? 'Update' : 'Add'} Product
-                  </Button>
-                </div>
-              </div>
+              <ProductForm
+                onSubmit={editingProduct ? handleEditProduct : handleAddProduct}
+                onCancel={closeDialog}
+                editingProduct={editingProduct}
+                isSubmitting={isSubmitting}
+              />
             </DialogContent>
           </Dialog>
         </div>
