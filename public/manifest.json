@@ -15,25 +15,25 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/lovable-uploads/31b09acc-b53a-4029-85c1-9e76c1fddc07.png",
+      "src": "/lovable-uploads/8b264069-5a55-44ce-bb93-3e259641998f.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/lovable-uploads/31b09acc-b53a-4029-85c1-9e76c1fddc07.png",
+      "src": "/lovable-uploads/8b264069-5a55-44ce-bb93-3e259641998f.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/lovable-uploads/31b09acc-b53a-4029-85c1-9e76c1fddc07.png",
+      "src": "/lovable-uploads/8b264069-5a55-44ce-bb93-3e259641998f.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/lovable-uploads/31b09acc-b53a-4029-85c1-9e76c1fddc07.png",
+      "src": "/lovable-uploads/8b264069-5a55-44ce-bb93-3e259641998f.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any"
@@ -47,7 +47,7 @@
       "url": "/billing",
       "icons": [
         {
-          "src": "/lovable-uploads/31b09acc-b53a-4029-85c1-9e76c1fddc07.png",
+          "src": "/lovable-uploads/8b264069-5a55-44ce-bb93-3e259641998f.png",
           "sizes": "96x96"
         }
       ]
