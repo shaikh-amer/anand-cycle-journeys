@@ -1,10 +1,10 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, DollarSign, ShoppingCart, Users, Calendar } from 'lucide-react';
 import { useBills } from '@/hooks/useBills';
 import { format } from 'date-fns';
+import ProductManagement from '@/components/dashboard/ProductManagement';
 
 const Dashboard = () => {
   const { bills, isLoading } = useBills();
@@ -69,6 +69,11 @@ const Dashboard = () => {
             <Button variant="outline">Export Data</Button>
             <Button>Generate Report</Button>
           </div>
+        </div>
+
+        {/* Product Management Section */}
+        <div className="mb-8">
+          <ProductManagement />
         </div>
 
         {/* Today's Stats */}
