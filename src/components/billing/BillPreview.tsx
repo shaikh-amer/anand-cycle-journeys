@@ -30,78 +30,74 @@ const BillPreview = ({
         <CardTitle>Bill Preview</CardTitle>
       </CardHeader>
       <CardContent>
-        <div ref={billPreviewRef} className="pdf-invoice-container bg-white w-full min-h-[297mm] p-8" style={{ width: '210mm', minHeight: '297mm' }}>
-          <div className="flex items-center justify-between mb-6">
-            <img src={"/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png"} alt="Anand Cycle Store Logo" className="h-20 w-20 object-contain" />
+        <div ref={billPreviewRef} className="pdf-invoice-container bg-white w-full" style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}>
+          <div className="flex items-center justify-between mb-4">
+            <img src={"/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png"} alt="Anand Cycle Store Logo" className="h-16 w-16 object-contain" />
             <div className="text-right">
-              <h2 className="text-3xl font-bold text-primary">INVOICE</h2>
-              <div className="text-sm text-muted-foreground">Invoice ID: {Date.now().toString().slice(-6)}</div>
+              <h2 className="text-2xl font-bold text-primary">INVOICE</h2>
+              <div className="text-xs text-muted-foreground">Invoice ID: {Date.now().toString().slice(-6)}</div>
             </div>
           </div>
-          <div className="mb-4 text-base text-muted-foreground">M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>Mob: 9393559292, 9960708348</div>
-          <div className="border-b-2 my-4"></div>
-          <div className="mb-4">
-            <span className="font-semibold text-primary text-lg">INVOICE TO:</span><br/>
-            <span className="font-bold text-xl">{customerInfo.name || 'Customer Name'}</span><br/>
-            <span className="text-base">{customerInfo.phone || 'Phone Number'}</span><br/>
-            <span className="text-sm">{customerInfo.address || 'Customer Address'}</span>
+          <div className="mb-3 text-sm text-muted-foreground">M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>Mob: 9393559292, 9960708348</div>
+          <div className="border-b-2 my-3"></div>
+          <div className="mb-3">
+            <span className="font-semibold text-primary text-base">INVOICE TO:</span><br/>
+            <span className="font-bold text-lg">{customerInfo.name || 'Customer Name'}</span><br/>
+            <span className="text-sm">{customerInfo.phone || 'Phone Number'}</span><br/>
+            <span className="text-xs">{customerInfo.address || 'Customer Address'}</span>
           </div>
-          <div className="mb-4 text-sm text-muted-foreground text-right">{new Date().toLocaleDateString()}</div>
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full text-base border-2">
+          <div className="mb-3 text-xs text-muted-foreground text-right">{new Date().toLocaleDateString()}</div>
+          <div className="overflow-x-auto mb-4">
+            <table className="w-full text-sm border-2">
               <thead>
                 <tr className="bg-muted">
-                  <th className="border-2 px-4 py-3 text-left font-bold">PRODUCT</th>
-                  <th className="border-2 px-4 py-3 font-bold">PRICE</th>
-                  <th className="border-2 px-4 py-3 font-bold">QTY</th>
-                  <th className="border-2 px-4 py-3 font-bold">TOTAL</th>
+                  <th className="border-2 px-3 py-2 text-left font-bold">PRODUCT</th>
+                  <th className="border-2 px-3 py-2 font-bold">PRICE</th>
+                  <th className="border-2 px-3 py-2 font-bold">QTY</th>
+                  <th className="border-2 px-3 py-2 font-bold">TOTAL</th>
                 </tr>
               </thead>
               <tbody>
-                {billItems.map((item, idx) => (
+                {billItems.slice(0, 5).map((item, idx) => (
                   <tr key={item.id}>
-                    <td className="border-2 px-4 py-3">{item.name || `Item ${idx + 1}`}</td>
-                    <td className="border-2 px-4 py-3 text-center">₹{item.rate}</td>
-                    <td className="border-2 px-4 py-3 text-center">{item.quantity}</td>
-                    <td className="border-2 px-4 py-3 text-right">₹{item.amount}</td>
+                    <td className="border-2 px-3 py-2 text-sm">{item.name || `Item ${idx + 1}`}</td>
+                    <td className="border-2 px-3 py-2 text-center text-sm">₹{item.rate}</td>
+                    <td className="border-2 px-3 py-2 text-center text-sm">{item.quantity}</td>
+                    <td className="border-2 px-3 py-2 text-right text-sm">₹{item.amount}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="flex justify-between items-start mb-6">
+          <div className="flex justify-between items-start mb-4">
             <div className="flex flex-col items-center">
-              <div className="text-sm font-semibold mb-2">Pay Online</div>
+              <div className="text-xs font-semibold mb-1">Pay Online</div>
               <img 
                 src="/lovable-uploads/cfe94889-bc9a-4467-8080-b2859a186c80.png" 
                 alt="Payment QR Code" 
-                className="w-24 h-24 object-contain"
+                className="w-20 h-20 object-contain"
               />
               <div className="text-xs text-muted-foreground mt-1 text-center">Scan to Pay</div>
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between w-48 text-lg">
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between w-40 text-base">
                 <span className="font-semibold">SUB-TOTAL</span>
                 <span className="font-semibold">₹{calculateTotal()}</span>
               </div>
               {includeGST && (
-                <div className="flex justify-between w-48 text-lg">
+                <div className="flex justify-between w-40 text-base">
                   <span className="font-semibold">GST (18%)</span>
                   <span className="font-semibold">₹{calculateGST()}</span>
                 </div>
               )}
-              <div className="flex justify-between w-48 font-bold border-t-2 pt-2 text-xl">
+              <div className="flex justify-between w-40 font-bold border-t-2 pt-1 text-lg">
                 <span>TOTAL</span>
                 <span>₹{calculateGrandTotal()}</span>
               </div>
             </div>
           </div>
-          <div className="my-6">
-            <span className="font-semibold text-lg">Payment Method</span>
-            <div className="text-base text-muted-foreground">(Cash / UPI / Card / Bank)</div>
-          </div>
-          <div className="mt-12 text-center font-bold text-primary text-2xl">THANK YOU FOR YOUR BUSINESS</div>
-          <div className="mt-4 text-right text-lg font-bold">New Anand Cycle Store</div>
+          <div className="mt-8 text-center font-bold text-primary text-xl">THANK YOU FOR YOUR BUSINESS</div>
+          <div className="mt-3 text-right text-base font-bold">New Anand Cycle Store</div>
         </div>
         <div className="flex items-center mt-4">
           <input type="checkbox" id="gst" checked={includeGST} onChange={e => setIncludeGST(e.target.checked)} className="mr-2" />

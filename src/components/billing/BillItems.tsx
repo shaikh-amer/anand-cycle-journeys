@@ -35,48 +35,48 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
                 placeholder="Item name"
                 value={item.name}
                 onChange={(e) => updateItem(item.id, 'name', e.target.value)}
-                className="w-full"
+                className="w-full min-w-0"
               />
             </div>
             
             {/* Quantity, Rate, Amount, and Remove button */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div>
+              <div className="min-w-0">
                 <label className="text-sm font-medium text-muted-foreground">Qty</label>
                 <Input
                   type="number"
                   min="1"
                   value={item.quantity}
                   onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
-                  className="w-full"
+                  className="w-full min-w-0"
                 />
               </div>
               
-              <div>
+              <div className="min-w-0">
                 <label className="text-sm font-medium text-muted-foreground">Rate (₹)</label>
                 <Input
                   type="number"
                   min="0"
                   value={item.rate}
                   onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-                  className="w-full"
+                  className="w-full min-w-0"
                 />
               </div>
               
-              <div>
+              <div className="min-w-0">
                 <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
-                <div className="flex items-center h-10 px-3 py-2 bg-muted rounded-md">
-                  <span className="font-semibold text-sm">{item.amount}</span>
+                <div className="flex items-center h-10 px-3 py-2 bg-muted rounded-md min-w-0">
+                  <span className="font-semibold text-sm truncate">{item.amount}</span>
                 </div>
               </div>
               
-              <div className="flex items-end">
+              <div className="flex items-end min-w-0">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => removeItem(item.id)}
                   disabled={billItems.length === 1}
-                  className="w-full"
+                  className="w-full min-w-0"
                 >
                   <Minus className="w-4 h-4" />
                 </Button>

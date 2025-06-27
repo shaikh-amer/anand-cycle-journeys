@@ -18,32 +18,32 @@ const CustomerInfoForm = ({ customerInfo, setCustomerInfo }: CustomerInfoFormPro
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
+          <div className="min-w-0">
             <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Name</label>
             <Input
               placeholder="Customer Name"
               value={customerInfo.name}
               onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-              className="w-full"
+              className="w-full min-w-0"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <label className="text-sm font-medium text-muted-foreground mb-1 block">Phone Number</label>
             <Input
               placeholder="Phone Number"
               value={customerInfo.phone}
               onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-              className="w-full"
+              className="w-full min-w-0"
             />
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Address</label>
           <Textarea
             placeholder="Customer Address"
             value={customerInfo.address}
             onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-            className="w-full resize-none"
+            className="w-full resize-none min-w-0"
             rows={3}
           />
         </div>
