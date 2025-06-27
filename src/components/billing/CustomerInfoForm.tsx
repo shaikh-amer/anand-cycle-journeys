@@ -13,37 +13,37 @@ const CustomerInfoForm = ({ customerInfo, setCustomerInfo }: CustomerInfoFormPro
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Customer Information</CardTitle>
-        <CardDescription>Enter customer details for the invoice</CardDescription>
+        <CardTitle className="text-lg sm:text-2xl">Customer Information</CardTitle>
+        <CardDescription className="text-sm">Enter customer details for the invoice</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="w-full">
-          <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Name</label>
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 block">Customer Name</label>
           <Input
             placeholder="Customer Name"
             value={customerInfo.name}
             onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-            className="w-full max-w-full"
+            className="w-full h-9 sm:h-10 text-sm"
           />
         </div>
         
         <div className="w-full">
-          <label className="text-sm font-medium text-muted-foreground mb-1 block">Phone Number</label>
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 block">Phone Number</label>
           <Input
             placeholder="Phone Number"
             value={customerInfo.phone}
             onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-            className="w-full max-w-full"
+            className="w-full h-9 sm:h-10 text-sm"
           />
         </div>
         
         <div className="w-full">
-          <label className="text-sm font-medium text-muted-foreground mb-1 block">Customer Address</label>
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 block">Customer Address</label>
           <Textarea
             placeholder="Customer Address"
             value={customerInfo.address}
             onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-            className="w-full max-w-full resize-none"
+            className="w-full resize-none text-sm"
             rows={3}
           />
         </div>

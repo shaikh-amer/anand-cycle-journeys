@@ -1,7 +1,6 @@
-
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { LogOut } from 'lucide-react';
+import { LogOut, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import CustomerInfoForm from '@/components/billing/CustomerInfoForm';
@@ -37,6 +36,7 @@ const Billing = () => {
     address: ''
   });
   const [includeGST, setIncludeGST] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const billPreviewRef = useRef<HTMLDivElement>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -163,22 +163,34 @@ const Billing = () => {
   };
 
   return (
-    <div className="py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
+    <div className="py-4 px-2 sm:py-8 sm:px-4">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center mb-6 sm:mb-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
-            <p className="text-muted-foreground">Create professional invoices for your customers</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
+            <p className="text-muted-foreground text-sm sm:text-base">Create professional invoices for your customers</p>
           </div>
-          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2 text-xs sm:text-sm">
             <LogOut className="w-4 h-4" />
-            Logout
+            <span className="hidden sm:inline">Logout</span>
           </Button>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Bill Form */}
-          <div className="lg:col-span-2 space-y-6">
+        {/* Mobile Preview Toggle */}
+        <div className="lg:hidden mb-4">
+          <Button 
+            variant="outline" 
+            onClick={() => setShowPreview(!showPreview)}
+            className="w-full flex items-center justify-center gap-2"
+          >
+            {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            {showPreview ? 'Hide Preview' : 'Show Preview'}
+          </Button>
+        </div>
+
+        <div className="space-y-6">
+          {/* Bill Form - Always visible, but conditional on mobile based on preview state */}
+          <div className={`space-y-4 sm:space-y-6 ${showPreview ? 'hidden lg:block' : 'block'}`}>
             <CustomerInfoForm customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} />
             <BillItems
               billItems={billItems}
@@ -199,8 +211,8 @@ const Billing = () => {
             />
           </div>
 
-          {/* Recent Bills & Preview */}
-          <div className="space-y-6">
+          {/* Preview - Hidden on mobile unless toggled, always visible on desktop */}
+          <div className={`space-y-6 ${!showPreview ? 'hidden lg:block' : 'block'}`}>
             <BillPreview
               billPreviewRef={billPreviewRef}
               customerInfo={customerInfo}
@@ -211,7 +223,9 @@ const Billing = () => {
               calculateGST={calculateGSTAmount}
               calculateGrandTotal={calculateGrandTotalAmount}
             />
-            <RecentBills />
+            <div className="hidden lg:block">
+              <RecentBills />
+            </div>
           </div>
         </div>
       </div>
