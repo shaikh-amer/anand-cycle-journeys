@@ -29,59 +29,60 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
         {billItems.map((item) => (
           <div key={item.id} className="space-y-3 p-4 bg-muted/30 rounded-lg">
             {/* Product Name - Full width */}
-            <div>
-              <label className="text-sm font-medium text-muted-foreground">Product/Service</label>
+            <div className="w-full">
+              <label className="text-sm font-medium text-muted-foreground block mb-1">Product/Service</label>
               <Input
                 placeholder="Item name"
                 value={item.name}
                 onChange={(e) => updateItem(item.id, 'name', e.target.value)}
-                className="w-full"
+                className="w-full max-w-full"
               />
             </div>
             
-            {/* Quantity and Rate - Side by side */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Qty</label>
+            {/* Quantity and Rate - Stacked on mobile */}
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+              <div className="flex-1">
+                <label className="text-sm font-medium text-muted-foreground block mb-1">Quantity</label>
                 <Input
                   type="number"
                   min="1"
                   value={item.quantity}
                   onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
-                  className="w-full"
+                  className="w-full max-w-full"
                 />
               </div>
               
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Rate (₹)</label>
+              <div className="flex-1">
+                <label className="text-sm font-medium text-muted-foreground block mb-1">Rate (₹)</label>
                 <Input
                   type="number"
                   min="0"
                   value={item.rate}
                   onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-                  className="w-full"
+                  className="w-full max-w-full"
                 />
               </div>
             </div>
 
-            {/* Amount and Remove button */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
-                <div className="flex items-center justify-center h-10 px-3 py-2 bg-muted rounded-md">
-                  <span className="font-semibold text-sm">{item.amount}</span>
+            {/* Amount and Remove button - Stacked on mobile */}
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 sm:items-end">
+              <div className="flex-1">
+                <label className="text-sm font-medium text-muted-foreground block mb-1">Amount (₹)</label>
+                <div className="flex items-center justify-center h-10 px-3 py-2 bg-muted rounded-md w-full">
+                  <span className="font-semibold text-sm">₹{item.amount}</span>
                 </div>
               </div>
               
-              <div className="flex items-end">
+              <div className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => removeItem(item.id)}
                   disabled={billItems.length === 1}
-                  className="w-full"
+                  className="w-full sm:w-auto"
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-4 h-4 sm:mr-0 mr-2" />
+                  <span className="sm:hidden">Remove Item</span>
                 </Button>
               </div>
             </div>
