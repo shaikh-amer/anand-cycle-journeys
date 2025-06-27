@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,11 +7,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, Filter } from 'lucide-react';
 import WhatsappIcon from '@/components/icons/WhatsappIcon';
 
+interface Product {
+  id: number | string;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  features: string[];
+}
+
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
 
-  const products = [
+  // Static products (existing ones)
+  const staticProducts: Product[] = [
     {
       id: 1,
       name: "Victory 24\"26\"27\"29\"",
@@ -550,6 +561,15 @@ const Products = () => {
     { value: 'accessories', label: 'Accessories' }
   ];
 
+  // Load custom products from localStorage
+  useEffect(() => {
+    const customProducts = localStorage.getItem('customProducts');
+    const parsedCustomProducts = customProducts ? JSON.parse(customProducts) : [];
+    
+    // Combine static products with custom products, with custom products appearing first
+    setAllProducts([...parsedCustomProducts, ...staticProducts]);
+  }, []);
+
   const handleWhatsAppInquiry = (productName: string) => {
     const phoneNumber = "919393559292";
     const message = `Hello, I'm interested in the "${productName}" bike. Could you please provide more details?`;
@@ -557,7 +577,7 @@ const Products = () => {
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = allProducts.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
