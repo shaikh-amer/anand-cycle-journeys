@@ -17,9 +17,9 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <span className="text-lg sm:text-xl">Bill Items</span>
-          <Button onClick={addItem} size="sm" className="btn-primary w-full sm:w-auto">
+        <CardTitle className="flex items-center justify-between">
+          Bill Items
+          <Button onClick={addItem} size="sm" className="btn-primary">
             <Plus className="w-4 h-4 mr-2" />
             Add Item
           </Button>
@@ -27,69 +27,65 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
       </CardHeader>
       <CardContent className="space-y-4">
         {billItems.map((item) => (
-          <div key={item.id} className="space-y-3 p-3 sm:p-4 bg-muted/30 rounded-lg">
+          <div key={item.id} className="space-y-3 p-4 bg-muted/30 rounded-lg">
             {/* Product Name - Full width */}
             <div className="w-full">
-              <label className="text-xs sm:text-sm font-medium text-muted-foreground block mb-1">Product/Service</label>
+              <label className="text-sm font-medium text-muted-foreground">Product/Service</label>
               <Input
                 placeholder="Item name"
                 value={item.name}
                 onChange={(e) => updateItem(item.id, 'name', e.target.value)}
-                className="w-full h-9 sm:h-10 text-sm"
+                className="w-full min-w-0"
               />
             </div>
             
-            {/* Quantity and Rate - Full width stacked on mobile */}
-            <div className="space-y-3">
-              <div className="w-full">
-                <label className="text-xs sm:text-sm font-medium text-muted-foreground block mb-1">Quantity</label>
+            {/* Quantity, Rate, Amount, and Remove button */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="min-w-0">
+                <label className="text-sm font-medium text-muted-foreground">Qty</label>
                 <Input
                   type="number"
                   min="1"
                   value={item.quantity}
                   onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
-                  className="w-full h-9 sm:h-10 text-sm"
+                  className="w-full min-w-0"
                 />
               </div>
               
-              <div className="w-full">
-                <label className="text-xs sm:text-sm font-medium text-muted-foreground block mb-1">Rate (₹)</label>
+              <div className="min-w-0">
+                <label className="text-sm font-medium text-muted-foreground">Rate (₹)</label>
                 <Input
                   type="number"
                   min="0"
                   value={item.rate}
                   onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-                  className="w-full h-9 sm:h-10 text-sm"
+                  className="w-full min-w-0"
                 />
               </div>
-            </div>
-
-            {/* Amount and Remove button - Full width stacked on mobile */}
-            <div className="space-y-3">
-              <div className="w-full">
-                <label className="text-xs sm:text-sm font-medium text-muted-foreground block mb-1">Amount (₹)</label>
-                <div className="flex items-center justify-center h-9 sm:h-10 px-3 py-2 bg-muted rounded-md w-full">
-                  <span className="font-semibold text-sm">₹{item.amount}</span>
+              
+              <div className="min-w-0">
+                <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
+                <div className="flex items-center h-10 px-3 py-2 bg-muted rounded-md min-w-0">
+                  <span className="font-semibold text-sm truncate">{item.amount}</span>
                 </div>
               </div>
               
-              <div className="w-full">
+              <div className="flex items-end min-w-0">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => removeItem(item.id)}
                   disabled={billItems.length === 1}
-                  className="w-full h-9 sm:h-10 text-sm"
+                  className="w-full min-w-0"
                 >
-                  <Minus className="w-4 h-4 mr-2" />
-                  Remove Item
+                  <Minus className="w-4 h-4" />
                 </Button>
               </div>
             </div>
           </div>
         ))}
         <div className="border-t pt-4">
-          <div className="flex justify-between items-center text-lg sm:text-xl font-bold">
+          <div className="flex justify-between items-center text-xl font-bold">
             <span>Total Amount:</span>
             <span className="text-primary">₹{calculateTotal()}</span>
           </div>

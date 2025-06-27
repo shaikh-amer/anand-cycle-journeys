@@ -163,22 +163,22 @@ const Billing = () => {
   };
 
   return (
-    <div className="py-4 px-2 sm:py-8 sm:px-4">
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center mb-6 sm:mb-8">
+    <div className="py-8">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center mb-8">
           <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
-            <p className="text-muted-foreground text-sm sm:text-base">Create professional invoices for your customers</p>
+            <h1 className="text-3xl font-bold text-primary mb-2">Bill Generation Portal</h1>
+            <p className="text-muted-foreground">Create professional invoices for your customers</p>
           </div>
-          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2 text-xs sm:text-sm">
+          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2">
             <LogOut className="w-4 h-4" />
-            <span className="hidden sm:inline">Logout</span>
+            Logout
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column - Bill Form */}
-          <div className="space-y-4 sm:space-y-6">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Bill Form */}
+          <div className="lg:col-span-2 space-y-6">
             <CustomerInfoForm customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} />
             <BillItems
               billItems={billItems}
@@ -199,7 +199,7 @@ const Billing = () => {
             />
           </div>
 
-          {/* Right Column - Preview */}
+          {/* Recent Bills & Preview */}
           <div className="space-y-6">
             <BillPreview
               billPreviewRef={billPreviewRef}
