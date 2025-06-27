@@ -32,7 +32,7 @@ const BillPreview = ({
       <CardContent>
         <div 
           ref={billPreviewRef} 
-          className="pdf-invoice-container bg-white"
+          className="pdf-invoice-container"
           style={{ 
             width: '210mm', 
             minHeight: '297mm', 
@@ -41,19 +41,19 @@ const BillPreview = ({
             lineHeight: '1.6',
             color: '#000000',
             fontFamily: 'Arial, sans-serif',
+            backgroundColor: '#ffffff',
             border: '1px solid #e5e5e5',
             margin: '0 auto',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            display: 'block',
+            position: 'relative'
           }}
         >
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '2px solid #8B5CF6', paddingBottom: '10px' }}>
-            <img 
-              src="/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png" 
-              alt="Anand Cycle Store Logo" 
-              style={{ height: '60px', width: '60px', objectFit: 'contain' }}
-              crossOrigin="anonymous"
-            />
+            <div style={{ height: '60px', width: '60px', backgroundColor: '#8B5CF6', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+              LOGO
+            </div>
             <div style={{ textAlign: 'right' }}>
               <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#8B5CF6', margin: '0 0 8px 0' }}>INVOICE</h1>
               <div style={{ fontSize: '14px', color: '#666666' }}>
@@ -132,12 +132,9 @@ const BillPreview = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '10px' }}>Visit Our Website</div>
-              <img 
-                src="/lovable-uploads/cfe94889-bc9a-4467-8080-b2859a186c80.png" 
-                alt="Website QR Code" 
-                style={{ width: '80px', height: '80px', objectFit: 'contain' }}
-                crossOrigin="anonymous"
-              />
+              <div style={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}>
+                QR CODE
+              </div>
               <div style={{ fontSize: '12px', color: '#666666', marginTop: '8px', textAlign: 'center' }}>
                 Scan to Visit Our Website
               </div>

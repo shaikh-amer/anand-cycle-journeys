@@ -1,92 +1,66 @@
-
 import html2pdf from 'html2pdf.js';
 import { supabase } from '@/integrations/supabase/client';
 
 export const generatePDFBlob = (element: HTMLElement, fileName: string): Promise<Blob> => {
   return new Promise((resolve, reject) => {
-    // Create a clone of the element to avoid modifying the original
-    const clonedElement = element.cloneNode(true) as HTMLElement;
-    
-    // Create a temporary container
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'absolute';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.top = '0';
-    tempContainer.style.width = '210mm';
-    tempContainer.style.backgroundColor = '#ffffff';
-    tempContainer.appendChild(clonedElement);
-    document.body.appendChild(tempContainer);
-
-    // Wait for any images to load
-    const images = tempContainer.querySelectorAll('img');
-    let loadedImages = 0;
-    const totalImages = images.length;
-
-    const checkImagesLoaded = () => {
-      if (loadedImages === totalImages) {
-        generatePDF();
+    // Use the element directly without cloning to avoid style issues
+    const opt = {
+      margin: 0.5,
+      filename: fileName,
+      image: { 
+        type: 'jpeg', 
+        quality: 1.0 
+      },
+      html2canvas: { 
+        scale: 1,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        logging: false,
+        letterRendering: true,
+        onclone: (clonedDoc: Document) => {
+          // Ensure all styles are properly applied in the cloned document
+          const clonedElement = clonedDoc.querySelector('.pdf-invoice-container') as HTMLElement;
+          if (clonedElement) {
+            clonedElement.style.display = 'block';
+            clonedElement.style.visibility = 'visible';
+            clonedElement.style.opacity = '1';
+            clonedElement.style.position = 'relative';
+            clonedElement.style.width = '210mm';
+            clonedElement.style.minHeight = '297mm';
+            clonedElement.style.backgroundColor = '#ffffff';
+            clonedElement.style.color = '#000000';
+            clonedElement.style.fontFamily = 'Arial, sans-serif';
+            clonedElement.style.fontSize = '14px';
+            clonedElement.style.lineHeight = '1.6';
+            clonedElement.style.padding = '20px';
+            clonedElement.style.boxSizing = 'border-box';
+          }
+        }
+      },
+      jsPDF: { 
+        unit: 'mm', 
+        format: 'a4', 
+        orientation: 'portrait',
+        compress: true
       }
     };
 
-    const generatePDF = () => {
-      const opt = {
-        margin: 10,
-        filename: fileName,
-        image: { 
-          type: 'jpeg', 
-          quality: 0.98 
-        },
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          width: 794, // A4 width in pixels at 96 DPI
-          height: 1123, // A4 height in pixels at 96 DPI
-          scrollX: 0,
-          scrollY: 0
-        },
-        jsPDF: { 
-          unit: 'mm', 
-          format: 'a4', 
-          orientation: 'portrait' 
-        }
-      };
-
-      html2pdf()
-        .from(clonedElement)
-        .set(opt)
-        .toPdf()
-        .output('blob')
-        .then((blob: Blob) => {
-          document.body.removeChild(tempContainer);
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .toPdf()
+      .output('blob')
+      .then((blob: Blob) => {
+        if (blob && blob.size > 0) {
           resolve(blob);
-        })
-        .catch((error: Error) => {
-          document.body.removeChild(tempContainer);
-          reject(error);
-        });
-    };
-
-    if (totalImages === 0) {
-      generatePDF();
-    } else {
-      images.forEach((img) => {
-        if (img.complete) {
-          loadedImages++;
-          checkImagesLoaded();
         } else {
-          img.onload = () => {
-            loadedImages++;
-            checkImagesLoaded();
-          };
-          img.onerror = () => {
-            loadedImages++;
-            checkImagesLoaded();
-          };
+          reject(new Error('Generated PDF is empty'));
         }
+      })
+      .catch((error: Error) => {
+        reject(error);
       });
-    }
   });
 };
 
