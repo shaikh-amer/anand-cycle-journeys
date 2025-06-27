@@ -32,94 +32,79 @@ const BillPreview = ({
       <CardContent>
         <div 
           ref={billPreviewRef} 
-          className="pdf-invoice-container"
-          style={{ 
-            width: '210mm', 
-            minHeight: '297mm', 
-            padding: '20px',
-            fontSize: '14px',
-            lineHeight: '1.6',
-            color: '#000000',
-            fontFamily: 'Arial, sans-serif',
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e5e5',
-            margin: '0 auto',
-            boxSizing: 'border-box',
-            display: 'block',
-            position: 'relative'
-          }}
+          className="pdf-invoice-container bg-white p-5 border border-gray-200 mx-auto max-w-4xl"
         >
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '2px solid #8B5CF6', paddingBottom: '10px' }}>
-            <div style={{ height: '60px', width: '60px', backgroundColor: '#8B5CF6', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+          <div className="flex items-center justify-between mb-6 border-b-2 border-violet-500 pb-4">
+            <div className="w-16 h-16 bg-violet-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">
               LOGO
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#8B5CF6', margin: '0 0 8px 0' }}>INVOICE</h1>
-              <div style={{ fontSize: '14px', color: '#666666' }}>
+            <div className="text-right">
+              <h1 className="text-3xl font-bold text-violet-500 mb-2">INVOICE</h1>
+              <div className="text-gray-600 text-sm">
                 Invoice ID: {Date.now().toString().slice(-6)}
               </div>
             </div>
           </div>
 
           {/* Store Information */}
-          <div style={{ marginBottom: '25px', textAlign: 'center', backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '8px' }}>
-            <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#8B5CF6', marginBottom: '5px' }}>
+          <div className="mb-6 text-center bg-gray-50 p-4 rounded-lg">
+            <div className="text-xl font-bold text-violet-500 mb-2">
               New Anand Cycle Store
             </div>
-            <div style={{ fontSize: '14px', color: '#333333' }}>
+            <div className="text-gray-700">
               M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>
               Mob: 9393559292, 9960708348
             </div>
           </div>
 
           {/* Customer Information */}
-          <div style={{ marginBottom: '25px', border: '1px solid #e5e5e5', padding: '15px', borderRadius: '8px' }}>
-            <div style={{ fontWeight: 'bold', color: '#8B5CF6', fontSize: '16px', marginBottom: '10px' }}>BILL TO:</div>
-            <div style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '5px' }}>
+          <div className="mb-6 border border-gray-200 p-4 rounded-lg">
+            <div className="font-bold text-violet-500 text-lg mb-3">BILL TO:</div>
+            <div className="font-bold text-xl mb-2">
               {customerInfo.name || 'Customer Name'}
             </div>
-            <div style={{ fontSize: '14px', marginBottom: '3px' }}>{customerInfo.phone || 'Phone Number'}</div>
-            <div style={{ fontSize: '14px' }}>{customerInfo.address || 'Customer Address'}</div>
+            <div className="text-gray-700 mb-1">{customerInfo.phone || 'Phone Number'}</div>
+            <div className="text-gray-700">{customerInfo.address || 'Customer Address'}</div>
           </div>
 
           {/* Date */}
-          <div style={{ marginBottom: '25px', fontSize: '14px', color: '#666666', textAlign: 'right' }}>
+          <div className="mb-6 text-right text-gray-600">
             <strong>Date: {new Date().toLocaleDateString()}</strong>
           </div>
 
           {/* Items Table */}
-          <div style={{ marginBottom: '25px' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', border: '2px solid #333' }}>
+          <div className="mb-6">
+            <table className="w-full border-collapse border-2 border-gray-800">
               <thead>
-                <tr style={{ backgroundColor: '#8B5CF6', color: 'white' }}>
-                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'left', fontWeight: 'bold', fontSize: '14px' }}>
+                <tr className="bg-violet-500 text-white">
+                  <th className="border border-gray-800 p-3 text-left font-bold">
                     PRODUCT/SERVICE
                   </th>
-                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
+                  <th className="border border-gray-800 p-3 text-center font-bold">
                     RATE (₹)
                   </th>
-                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
+                  <th className="border border-gray-800 p-3 text-center font-bold">
                     QTY
                   </th>
-                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'right', fontWeight: 'bold', fontSize: '14px' }}>
+                  <th className="border border-gray-800 p-3 text-right font-bold">
                     AMOUNT (₹)
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {billItems.filter(item => item.name.trim()).map((item, idx) => (
-                  <tr key={item.id} style={{ backgroundColor: idx % 2 === 0 ? '#f8f9fa' : 'white' }}>
-                    <td style={{ border: '1px solid #333', padding: '12px', fontSize: '14px' }}>
+                  <tr key={item.id} className={idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="border border-gray-800 p-3">
                       {item.name}
                     </td>
-                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontSize: '14px' }}>
+                    <td className="border border-gray-800 p-3 text-center">
                       ₹{item.rate}
                     </td>
-                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontSize: '14px' }}>
+                    <td className="border border-gray-800 p-3 text-center">
                       {item.quantity}
                     </td>
-                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'right', fontSize: '14px' }}>
+                    <td className="border border-gray-800 p-3 text-right">
                       ₹{item.amount}
                     </td>
                   </tr>
@@ -129,56 +114,37 @@ const BillPreview = ({
           </div>
 
           {/* Totals Section */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '10px' }}>Visit Our Website</div>
-              <div style={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}>
+          <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col items-center">
+              <div className="text-sm font-bold mb-2">Visit Our Website</div>
+              <div className="w-20 h-20 bg-gray-100 border border-gray-300 flex items-center justify-center text-xs">
                 QR CODE
               </div>
-              <div style={{ fontSize: '12px', color: '#666666', marginTop: '8px', textAlign: 'center' }}>
+              <div className="text-xs text-gray-600 mt-2 text-center">
                 Scan to Visit Our Website
               </div>
             </div>
             
-            <div style={{ textAlign: 'right', minWidth: '250px', border: '2px solid #8B5CF6', padding: '15px', borderRadius: '8px', backgroundColor: '#f8f9fa' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '16px' }}>
-                <span style={{ fontWeight: 'bold' }}>SUBTOTAL:</span>
-                <span style={{ fontWeight: 'bold', marginLeft: '30px' }}>₹{calculateTotal()}</span>
+            <div className="text-right min-w-64 border-2 border-violet-500 p-4 rounded-lg bg-gray-50">
+              <div className="flex justify-between mb-3 text-lg">
+                <span className="font-bold">SUBTOTAL:</span>
+                <span className="font-bold ml-8">₹{calculateTotal()}</span>
               </div>
               {includeGST && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '16px' }}>
-                  <span style={{ fontWeight: 'bold' }}>GST (18%):</span>
-                  <span style={{ fontWeight: 'bold', marginLeft: '30px' }}>₹{calculateGST()}</span>
+                <div className="flex justify-between mb-3 text-lg">
+                  <span className="font-bold">GST (18%):</span>
+                  <span className="font-bold ml-8">₹{calculateGST()}</span>
                 </div>
               )}
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                fontWeight: 'bold', 
-                borderTop: '2px solid #8B5CF6', 
-                paddingTop: '10px', 
-                fontSize: '18px',
-                marginTop: '10px',
-                color: '#8B5CF6'
-              }}>
+              <div className="flex justify-between font-bold border-t-2 border-violet-500 pt-3 text-xl text-violet-500">
                 <span>TOTAL:</span>
-                <span style={{ marginLeft: '30px' }}>₹{calculateGrandTotal()}</span>
+                <span className="ml-8">₹{calculateGrandTotal()}</span>
               </div>
             </div>
           </div>
 
           {/* Thank You Message */}
-          <div style={{ 
-            marginTop: '40px', 
-            textAlign: 'center', 
-            fontWeight: 'bold', 
-            color: '#8B5CF6', 
-            fontSize: '20px',
-            marginBottom: '20px',
-            border: '2px solid #8B5CF6',
-            padding: '15px',
-            borderRadius: '8px'
-          }}>
+          <div className="text-center font-bold text-violet-500 text-2xl border-2 border-violet-500 p-4 rounded-lg">
             THANK YOU FOR YOUR BUSINESS!
           </div>
         </div>

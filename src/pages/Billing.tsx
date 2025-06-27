@@ -1,6 +1,7 @@
+
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { LogOut, Eye, EyeOff } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import CustomerInfoForm from '@/components/billing/CustomerInfoForm';
@@ -36,7 +37,6 @@ const Billing = () => {
     address: ''
   });
   const [includeGST, setIncludeGST] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
   const billPreviewRef = useRef<HTMLDivElement>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -176,21 +176,9 @@ const Billing = () => {
           </Button>
         </div>
 
-        {/* Mobile Preview Toggle */}
-        <div className="lg:hidden mb-4">
-          <Button 
-            variant="outline" 
-            onClick={() => setShowPreview(!showPreview)}
-            className="w-full flex items-center justify-center gap-2"
-          >
-            {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            {showPreview ? 'Hide Preview' : 'Show Preview'}
-          </Button>
-        </div>
-
-        <div className="space-y-6">
-          {/* Bill Form - Always visible, but conditional on mobile based on preview state */}
-          <div className={`space-y-4 sm:space-y-6 ${showPreview ? 'hidden lg:block' : 'block'}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column - Bill Form */}
+          <div className="space-y-4 sm:space-y-6">
             <CustomerInfoForm customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} />
             <BillItems
               billItems={billItems}
@@ -211,8 +199,8 @@ const Billing = () => {
             />
           </div>
 
-          {/* Preview - Hidden on mobile unless toggled, always visible on desktop */}
-          <div className={`space-y-6 ${!showPreview ? 'hidden lg:block' : 'block'}`}>
+          {/* Right Column - Preview */}
+          <div className="space-y-6">
             <BillPreview
               billPreviewRef={billPreviewRef}
               customerInfo={customerInfo}
@@ -223,9 +211,7 @@ const Billing = () => {
               calculateGST={calculateGSTAmount}
               calculateGrandTotal={calculateGrandTotalAmount}
             />
-            <div className="hidden lg:block">
-              <RecentBills />
-            </div>
+            <RecentBills />
           </div>
         </div>
       </div>
