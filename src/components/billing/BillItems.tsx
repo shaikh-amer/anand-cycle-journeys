@@ -27,46 +27,60 @@ const BillItems = ({ billItems, addItem, removeItem, updateItem, calculateTotal 
       </CardHeader>
       <CardContent className="space-y-4">
         {billItems.map((item) => (
-          <div key={item.id} className="grid grid-cols-12 gap-4 items-end p-4 bg-muted/30 rounded-lg">
-            <div className="col-span-12 md:col-span-4">
+          <div key={item.id} className="space-y-3 p-4 bg-muted/30 rounded-lg">
+            {/* Product Name - Full width */}
+            <div className="w-full">
               <label className="text-sm font-medium text-muted-foreground">Product/Service</label>
               <Input
                 placeholder="Item name"
                 value={item.name}
                 onChange={(e) => updateItem(item.id, 'name', e.target.value)}
+                className="w-full"
               />
             </div>
-            <div className="col-span-4 md:col-span-2">
-              <label className="text-sm font-medium text-muted-foreground">Qty</label>
-              <Input
-                type="number"
-                min="1"
-                value={item.quantity}
-                onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
-              />
-            </div>
-            <div className="col-span-4 md:col-span-2">
-              <label className="text-sm font-medium text-muted-foreground">Rate (₹)</label>
-              <Input
-                type="number"
-                min="0"
-                value={item.rate}
-                onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-              />
-            </div>
-            <div className="col-span-3 md:col-span-2">
-              <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
-              <div className="font-semibold text-lg">{item.amount}</div>
-            </div>
-            <div className="col-span-1 md:col-span-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => removeItem(item.id)}
-                disabled={billItems.length === 1}
-              >
-                <Minus className="w-4 h-4" />
-              </Button>
+            
+            {/* Quantity, Rate, Amount, and Remove button */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Qty</label>
+                <Input
+                  type="number"
+                  min="1"
+                  value={item.quantity}
+                  onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Rate (₹)</label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={item.rate}
+                  onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium text-muted-foreground">Amount (₹)</label>
+                <div className="flex items-center h-10 px-3 py-2 bg-muted rounded-md">
+                  <span className="font-semibold text-sm">{item.amount}</span>
+                </div>
+              </div>
+              
+              <div className="flex items-end">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => removeItem(item.id)}
+                  disabled={billItems.length === 1}
+                  className="w-full"
+                >
+                  <Minus className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
         ))}

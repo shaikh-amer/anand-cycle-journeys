@@ -69,20 +69,31 @@ const BillPreview = ({
               </tbody>
             </table>
           </div>
-          <div className="flex flex-col items-end gap-2 mb-6">
-            <div className="flex justify-between w-1/2 text-lg">
-              <span className="font-semibold">SUB-TOTAL</span>
-              <span className="font-semibold">₹{calculateTotal()}</span>
+          <div className="flex justify-between items-start mb-6">
+            <div className="flex flex-col items-center">
+              <div className="text-sm font-semibold mb-2">Pay Online</div>
+              <img 
+                src="/lovable-uploads/cfe94889-bc9a-4467-8080-b2859a186c80.png" 
+                alt="Payment QR Code" 
+                className="w-24 h-24 object-contain"
+              />
+              <div className="text-xs text-muted-foreground mt-1 text-center">Scan to Pay</div>
             </div>
-            {includeGST && (
-              <div className="flex justify-between w-1/2 text-lg">
-                <span className="font-semibold">GST (18%)</span>
-                <span className="font-semibold">₹{calculateGST()}</span>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between w-48 text-lg">
+                <span className="font-semibold">SUB-TOTAL</span>
+                <span className="font-semibold">₹{calculateTotal()}</span>
               </div>
-            )}
-            <div className="flex justify-between w-1/2 font-bold border-t-2 pt-2 text-xl">
-              <span>TOTAL</span>
-              <span>₹{calculateGrandTotal()}</span>
+              {includeGST && (
+                <div className="flex justify-between w-48 text-lg">
+                  <span className="font-semibold">GST (18%)</span>
+                  <span className="font-semibold">₹{calculateGST()}</span>
+                </div>
+              )}
+              <div className="flex justify-between w-48 font-bold border-t-2 pt-2 text-xl">
+                <span>TOTAL</span>
+                <span>₹{calculateGrandTotal()}</span>
+              </div>
             </div>
           </div>
           <div className="my-6">
