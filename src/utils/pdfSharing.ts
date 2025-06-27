@@ -4,11 +4,17 @@ import { CustomerInfo } from '@/types/billing';
 
 export const generatePDFFile = async (element: HTMLElement, fileName: string): Promise<File> => {
   const opt = {
-    margin: [0.2, 0.2, 0.2, 0.2],
+    margin: 0,
     filename: fileName,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      letterRendering: true,
+      width: element.scrollWidth,
+      height: element.scrollHeight
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 

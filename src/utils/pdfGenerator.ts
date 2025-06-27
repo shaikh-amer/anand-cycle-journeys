@@ -4,11 +4,17 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const generatePDFBlob = (element: HTMLElement, fileName: string): Promise<Blob> => {
   const opt = {
-    margin: [0.2, 0.2, 0.2, 0.2],
+    margin: 0,
     filename: fileName,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      letterRendering: true,
+      width: element.scrollWidth,
+      height: element.scrollHeight
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 
@@ -40,11 +46,17 @@ export const uploadPDFToSupabase = async (pdfBlob: Blob, fileName: string): Prom
 
 export const downloadPDF = async (element: HTMLElement, fileName: string): Promise<void> => {
   const opt = {
-    margin: [0.2, 0.2, 0.2, 0.2],
+    margin: 0,
     filename: fileName,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      letterRendering: true,
+      width: element.scrollWidth,
+      height: element.scrollHeight
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 
@@ -53,11 +65,17 @@ export const downloadPDF = async (element: HTMLElement, fileName: string): Promi
 
 export const printPDF = async (element: HTMLElement, fileName: string): Promise<void> => {
   const opt = {
-    margin: [0.2, 0.2, 0.2, 0.2],
+    margin: 0,
     filename: fileName,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      letterRendering: true,
+      width: element.scrollWidth,
+      height: element.scrollHeight
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 
