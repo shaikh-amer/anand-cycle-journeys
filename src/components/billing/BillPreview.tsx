@@ -32,12 +32,11 @@ const BillPreview = ({
       <CardContent>
         <div 
           ref={billPreviewRef} 
-          className="pdf-invoice-container"
+          className="pdf-invoice-container bg-white"
           style={{ 
             width: '210mm', 
             minHeight: '297mm', 
             padding: '20px',
-            backgroundColor: '#ffffff',
             fontSize: '14px',
             lineHeight: '1.6',
             color: '#000000',
@@ -47,79 +46,81 @@ const BillPreview = ({
             boxSizing: 'border-box'
           }}
         >
-          {/* Header with Logo and Invoice Title */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '2px solid #8B5CF6', paddingBottom: '10px' }}>
             <img 
               src="/lovable-uploads/a881c037-efd2-4b54-bc5c-3000bab741b0.png" 
               alt="Anand Cycle Store Logo" 
               style={{ height: '60px', width: '60px', objectFit: 'contain' }}
+              crossOrigin="anonymous"
             />
             <div style={{ textAlign: 'right' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#8B5CF6', margin: '0 0 8px 0' }}>INVOICE</h1>
-              <div style={{ fontSize: '12px', color: '#666666' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#8B5CF6', margin: '0 0 8px 0' }}>INVOICE</h1>
+              <div style={{ fontSize: '14px', color: '#666666' }}>
                 Invoice ID: {Date.now().toString().slice(-6)}
               </div>
             </div>
           </div>
 
-          {/* Store Address */}
-          <div style={{ marginBottom: '20px', fontSize: '12px', color: '#666666' }}>
-            <strong>New Anand Cycle Store</strong><br/>
-            M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>
-            Mob: 9393559292, 9960708348
+          {/* Store Information */}
+          <div style={{ marginBottom: '25px', textAlign: 'center', backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '8px' }}>
+            <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#8B5CF6', marginBottom: '5px' }}>
+              New Anand Cycle Store
+            </div>
+            <div style={{ fontSize: '14px', color: '#333333' }}>
+              M.G.Road, Near Habib Talkies, NANDED - 431604 (M.S)<br/>
+              Mob: 9393559292, 9960708348
+            </div>
           </div>
 
-          {/* Divider */}
-          <div style={{ borderBottom: '2px solid #000', margin: '20px 0' }}></div>
-
           {/* Customer Information */}
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{ fontWeight: 'bold', color: '#8B5CF6', fontSize: '14px', marginBottom: '8px' }}>BILL TO:</div>
-            <div style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '4px' }}>
+          <div style={{ marginBottom: '25px', border: '1px solid #e5e5e5', padding: '15px', borderRadius: '8px' }}>
+            <div style={{ fontWeight: 'bold', color: '#8B5CF6', fontSize: '16px', marginBottom: '10px' }}>BILL TO:</div>
+            <div style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '5px' }}>
               {customerInfo.name || 'Customer Name'}
             </div>
-            <div style={{ fontSize: '12px', marginBottom: '2px' }}>{customerInfo.phone || 'Phone Number'}</div>
-            <div style={{ fontSize: '12px' }}>{customerInfo.address || 'Customer Address'}</div>
+            <div style={{ fontSize: '14px', marginBottom: '3px' }}>{customerInfo.phone || 'Phone Number'}</div>
+            <div style={{ fontSize: '14px' }}>{customerInfo.address || 'Customer Address'}</div>
           </div>
 
           {/* Date */}
-          <div style={{ marginBottom: '20px', fontSize: '12px', color: '#666666', textAlign: 'right' }}>
-            Date: {new Date().toLocaleDateString()}
+          <div style={{ marginBottom: '25px', fontSize: '14px', color: '#666666', textAlign: 'right' }}>
+            <strong>Date: {new Date().toLocaleDateString()}</strong>
           </div>
 
           {/* Items Table */}
-          <div style={{ marginBottom: '20px' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', border: '2px solid #000' }}>
+          <div style={{ marginBottom: '25px' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: '2px solid #333' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f8f9fa' }}>
-                  <th style={{ border: '1px solid #000', padding: '12px', textAlign: 'left', fontWeight: 'bold', fontSize: '12px' }}>
+                <tr style={{ backgroundColor: '#8B5CF6', color: 'white' }}>
+                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'left', fontWeight: 'bold', fontSize: '14px' }}>
                     PRODUCT/SERVICE
                   </th>
-                  <th style={{ border: '1px solid #000', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '12px' }}>
+                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
                     RATE (₹)
                   </th>
-                  <th style={{ border: '1px solid #000', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '12px' }}>
+                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
                     QTY
                   </th>
-                  <th style={{ border: '1px solid #000', padding: '12px', textAlign: 'right', fontWeight: 'bold', fontSize: '12px' }}>
+                  <th style={{ border: '1px solid #333', padding: '12px', textAlign: 'right', fontWeight: 'bold', fontSize: '14px' }}>
                     AMOUNT (₹)
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {billItems.filter(item => item.name.trim()).map((item, idx) => (
-                  <tr key={item.id}>
-                    <td style={{ border: '1px solid #000', padding: '12px', fontSize: '12px' }}>
+                  <tr key={item.id} style={{ backgroundColor: idx % 2 === 0 ? '#f8f9fa' : 'white' }}>
+                    <td style={{ border: '1px solid #333', padding: '12px', fontSize: '14px' }}>
                       {item.name}
                     </td>
-                    <td style={{ border: '1px solid #000', padding: '12px', textAlign: 'center', fontSize: '12px' }}>
-                      {item.rate}
+                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontSize: '14px' }}>
+                      ₹{item.rate}
                     </td>
-                    <td style={{ border: '1px solid #000', padding: '12px', textAlign: 'center', fontSize: '12px' }}>
+                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'center', fontSize: '14px' }}>
                       {item.quantity}
                     </td>
-                    <td style={{ border: '1px solid #000', padding: '12px', textAlign: 'right', fontSize: '12px' }}>
-                      {item.amount}
+                    <td style={{ border: '1px solid #333', padding: '12px', textAlign: 'right', fontSize: '14px' }}>
+                      ₹{item.amount}
                     </td>
                   </tr>
                 ))}
@@ -130,39 +131,41 @@ const BillPreview = ({
           {/* Totals Section */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px' }}>Visit Our Website</div>
+              <div style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '10px' }}>Visit Our Website</div>
               <img 
                 src="/lovable-uploads/cfe94889-bc9a-4467-8080-b2859a186c80.png" 
                 alt="Website QR Code" 
                 style={{ width: '80px', height: '80px', objectFit: 'contain' }}
+                crossOrigin="anonymous"
               />
-              <div style={{ fontSize: '10px', color: '#666666', marginTop: '8px', textAlign: 'center' }}>
+              <div style={{ fontSize: '12px', color: '#666666', marginTop: '8px', textAlign: 'center' }}>
                 Scan to Visit Our Website
               </div>
             </div>
             
-            <div style={{ textAlign: 'right', minWidth: '200px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px' }}>
+            <div style={{ textAlign: 'right', minWidth: '250px', border: '2px solid #8B5CF6', padding: '15px', borderRadius: '8px', backgroundColor: '#f8f9fa' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '16px' }}>
                 <span style={{ fontWeight: 'bold' }}>SUBTOTAL:</span>
-                <span style={{ fontWeight: 'bold', marginLeft: '20px' }}>₹{calculateTotal()}</span>
+                <span style={{ fontWeight: 'bold', marginLeft: '30px' }}>₹{calculateTotal()}</span>
               </div>
               {includeGST && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '16px' }}>
                   <span style={{ fontWeight: 'bold' }}>GST (18%):</span>
-                  <span style={{ fontWeight: 'bold', marginLeft: '20px' }}>₹{calculateGST()}</span>
+                  <span style={{ fontWeight: 'bold', marginLeft: '30px' }}>₹{calculateGST()}</span>
                 </div>
               )}
               <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 fontWeight: 'bold', 
-                borderTop: '2px solid #000', 
-                paddingTop: '8px', 
-                fontSize: '16px',
-                marginTop: '8px'
+                borderTop: '2px solid #8B5CF6', 
+                paddingTop: '10px', 
+                fontSize: '18px',
+                marginTop: '10px',
+                color: '#8B5CF6'
               }}>
                 <span>TOTAL:</span>
-                <span style={{ marginLeft: '20px' }}>₹{calculateGrandTotal()}</span>
+                <span style={{ marginLeft: '30px' }}>₹{calculateGrandTotal()}</span>
               </div>
             </div>
           </div>
@@ -173,8 +176,11 @@ const BillPreview = ({
             textAlign: 'center', 
             fontWeight: 'bold', 
             color: '#8B5CF6', 
-            fontSize: '18px',
-            marginBottom: '20px'
+            fontSize: '20px',
+            marginBottom: '20px',
+            border: '2px solid #8B5CF6',
+            padding: '15px',
+            borderRadius: '8px'
           }}>
             THANK YOU FOR YOUR BUSINESS!
           </div>
