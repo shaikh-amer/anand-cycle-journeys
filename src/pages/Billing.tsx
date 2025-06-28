@@ -199,20 +199,24 @@ const Billing = () => {
             />
           </div>
 
-          {/* Recent Bills & Preview */}
+          {/* Recent Bills */}
           <div className="space-y-6">
-            <BillPreview
-              billPreviewRef={billPreviewRef}
-              customerInfo={customerInfo}
-              billItems={billItems}
-              includeGST={includeGST}
-              setIncludeGST={setIncludeGST}
-              calculateTotal={calculateTotal}
-              calculateGST={calculateGSTAmount}
-              calculateGrandTotal={calculateGrandTotalAmount}
-            />
             <RecentBills />
           </div>
+        </div>
+
+        {/* Bill Preview - Now below the form */}
+        <div className="mt-8">
+          <BillPreview
+            billPreviewRef={billPreviewRef}
+            customerInfo={customerInfo}
+            billItems={billItems}
+            includeGST={includeGST}
+            setIncludeGST={setIncludeGST}
+            calculateTotal={calculateTotal}
+            calculateGST={calculateGSTAmount}
+            calculateGrandTotal={calculateGrandTotalAmount}
+          />
         </div>
       </div>
     </div>
